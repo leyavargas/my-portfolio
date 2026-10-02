@@ -1,0 +1,57 @@
+---
+import { site } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer id="contacto" class="container">
+  <div class="cta">
+    <p class="eyebrow">Contacto</p>
+    <h2>¿Trabajamos juntos?</h2>
+    <a class="mail" href={`mailto:${site.email}`}>{site.email}</a>
+  </div>
+  <div class="bottom">
+    <span>© {year} {site.name}</span>
+    <ul>
+      {
+        site.social.map(({ label, href }) => (
+          <li>
+            <a href={href} target="_blank" rel="noopener noreferrer">
+              {label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</footer>
+
+<style>
+  footer {
+    margin-top: 6rem;
+    padding-block: 4rem 2rem;
+    border-top: 1px solid var(--line);
+  }
+  h2 {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+  }
+  .mail {
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    text-underline-offset: 0.2em;
+  }
+  .bottom {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-top: 4rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  ul {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+</style>

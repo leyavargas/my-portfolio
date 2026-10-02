@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Página no encontrada">
+  <section class="container">
+    <p class="eyebrow">Error 404</p>
+    <h1>Esta página no existe.</h1>
+    <a class="button" href="/">Volver al inicio</a>
+  </section>
+</BaseLayout>
+
+<style>
+  section {
+    padding-block: 8rem;
+  }
+  h1 {
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+  }
+</style>
