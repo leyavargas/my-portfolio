@@ -7,14 +7,20 @@ import { site } from '../data/site';
 interface Props {
   title?: string;
   description?: string;
+  /** El nav se superpone al primer bloque de la página (p. ej. el hero). */
+  overlayHeader?: boolean;
+  /** Página sin nav (p. ej. los casos de estudio, que tienen su propio botón de volver). */
+  hideHeader?: boolean;
+  /** Color de fondo solo para esta página (sobrescribe --bg). */
+  background?: string;
 }
 
-const { title, description = site.description } = Astro.props;
+const { title, description = site.description, overlayHeader = false, hideHeader = false, background } = Astro.props;
 const pageTitle = title ? `${title} · ${site.name}` : `${site.name} — ${site.role}`;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -28,13 +34,13 @@ const pageTitle = title ? `${title} · ${site.name}` : `${site.name} — ${site.
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap"
       rel="stylesheet"
     />
   </head>
-  <body>
-    <a class="skip" href="#main">Saltar al contenido</a>
-    <Header />
+  <body style={background ? `--bg: ${background}` : undefined}>
+    <a class="skip" href="#main">Skip to content</a>
+    {!hideHeader && <Header overlay={overlayHeader} />}
     <main id="main">
       <slot />
     </main>
@@ -43,6 +49,9 @@ const pageTitle = title ? `${title} · ${site.name}` : `${site.name} — ${site.
 </html>
 
 <style>
+  main {
+    padding-bottom: 6rem;
+  }
   .skip {
     position: absolute;
     left: -9999px;

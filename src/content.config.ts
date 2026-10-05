@@ -8,12 +8,17 @@ const projects = defineCollection({
     z.object({
       title: z.string(),
       summary: z.string(),
+      // Texto corto para la tarjeta del inicio; si falta, se usa `summary`.
+      excerpt: z.string().optional(),
       client: z.string().optional(),
+      collaboration: z.string().optional(),
       role: z.string(),
-      year: z.number(),
+      // Un año (2024) o un rango ("2020-2022").
+      year: z.union([z.number(), z.string()]),
       duration: z.string().optional(),
       tools: z.array(z.string()).default([]),
-      tags: z.array(z.string()).default([]),
+      // Resultados clave que se muestran en la sección Impact del overview.
+      impact: z.array(z.string()).default([]),
       cover: image().optional(),
       accent: z.string().default('#e8e4dc'),
       featured: z.boolean().default(false),

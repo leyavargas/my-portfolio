@@ -1,0 +1,113 @@
+---
+title: Transita Ecosystem
+summary: End-to-end project, from research to UI design. Public transportation in Costa Rica is fragmented, unreliable, and stressful, especially for people who depend on it to get to work. Poor route connectivity, inconsistent schedules, and limited real-time information force commuters to leave home hours early just to arrive on time.
+excerpt: An integrated transit platform that helps commuters in Costa Rica plan, track, and adapt their bus journeys
+role: UX Research, Interaction Design, Information Architecture, Naming, UI Design
+collaboration: Jose Valverde, Milena Somogyi
+year: 2026
+cover: ./transita/00-header-v2.jpg
+accent: '#c9dcf7'
+order: 1
+---
+
+import CaseImage from '../../components/CaseImage.astro';
+import ImageCarousel from '../../components/ImageCarousel.astro';
+import empathyMap from './transita/01-empathy-map-v2.jpg';
+import userMatrix from './transita/02-user-matrix-v2.jpg';
+import persona from './transita/03-persona-v2.jpg';
+import outbound from './transita/04-outbound-journey-v2.jpg';
+import returnJourney from './transita/05-return-journey-v3.jpg';
+import surveyCommute from './transita/06-survey-commute-v2.jpg';
+import surveyPriorities from './transita/07-survey-priorities-v2.jpg';
+import ecosystem from './transita/08-solution-ecosystem-v2.jpg';
+import walkthrough from './transita/09-walkthrough.gif';
+import iterations1 from './transita/10-prototype-iterations-1-v2.jpg';
+import iterations2 from './transita/11-prototype-iterations-2-v2.jpg';
+import finalUi from './transita/12-final-ui-v2.jpg';
+
+## Research
+
+We conducted open-ended interviews with approximately 15 participants across different age groups, locations, and transportation habits. We explored how people experience transportation and mobility in their daily lives, without starting from a predefined problem.
+
+<CaseImage src={empathyMap} alt="Empathy map with color-coded sticky notes grouping what interviewees think, feel, see, hear, and do about public transportation" />
+
+**Insight:** The most critical users were in-person workers who relied on public transit, had no access to a private vehicle, and commuted to fixed destinations during peak hours.
+
+<CaseImage src={userMatrix} alt="Matrix of user groups by vehicle ownership and destination flexibility, highlighting people with no own vehicle and a non-flexible destination as the most affected" />
+
+We then mapped the broader transportation ecosystem, including operators, drivers, government entities, passengers, and physical infrastructure.
+
+## Understanding the User
+
+We identified three primary user groups: in-person workers, university students with fixed schedules, and older adults, creating four personas based on interview data.
+
+Women faced additional challenges around safety, access to private transportation, and caregiving trips. This informed our primary persona, Marcela, a receptionist commuting from Pavas to Escazú, who became the focus of our journey map.
+
+<CaseImage src={persona} alt="Persona of Marcela Rodríguez, a 40-year-old receptionist from Pavas, with her bio, goals, frustrations, motivations, personality, and technology use" />
+
+## Journey & Opportunities
+
+We mapped both directions of Marcela’s commute to capture how her experience changed throughout the day. While unpredictable wait times, exhausting transfers, and limited information affected her overall journey, the return commute added further strain as afternoon rain increased traffic, overcrowding, and delays.
+
+<ImageCarousel
+  label="Journey maps"
+  images={[
+    { src: outbound, alt: 'Outbound journey map with six stages from preparation to the second bus ride, an experience curve, and improvement opportunities' },
+    { src: returnJourney, alt: 'Return journey map with five stages from arriving at the destination to the second bus ride home, an experience curve, and improvement opportunities' },
+  ]}
+/>
+
+We prioritized opportunities based on their potential to reduce travel time and improve commuters’ physical and emotional well-being. The two most impactful opportunities that emerged were: real-time bus tracking via GPS and increased service frequency.
+
+## Validation
+
+We conducted seven in-depth interviews with in-person workers, followed by a survey of 61 participants to validate and quantify the patterns we observed.
+
+**Key insight:** Public transit users experience a loss of control over their time. Unpredictable schedules, unreliable information, overcrowding, and lengthy transfers force commuters to **plan hours in advance**, sacrificing time, comfort, and peace of mind just to arrive on time.
+
+<ImageCarousel
+  label="Survey results"
+  images={[
+    { src: surveyCommute, alt: 'Survey charts: typical commute time, where 39.3% travel more than an hour, and rainy season travel experience, which 55.7% describe as traumatic or unbearable' },
+    { src: surveyPriorities, alt: 'Survey charts: decisions under time pressure, where 73.8% take an Uber or DiDi, and top priority improvement, led by more frequent bus service at 42.6%' },
+  ]}
+/>
+
+The survey confirmed the scale of these challenges:
+
+- **82%** commute at least one hour each way.
+- **72%** wake up 2–3 hours earlier due to unreliable schedules.
+- **74%** face unexpected costs when buses fail to arrive.
+- **49%** experience chronic stress and anxiety linked to transit uncertainty.
+
+## The Transita Ecosystem
+
+The final proposal was an integrated transit platform combining increased bus frequency, route synchronization, and real-time communication. Improving reliability required coordination across the entire transit network, not just better information for riders.
+
+The solution evolved into **Transita**, an ecosystem composed of three interconnected products.
+
+<CaseImage src={ecosystem} alt="Solution ecosystem diagram with the Administrative Platform, Bus Driver App, and Passenger App, each with its primary users and key capabilities" />
+
+## From Research to Design
+
+We focused on the Passenger App, where uncertainty had the greatest impact on the commuting experience. Our initial wireframes explored route planning, stop information, real-time tracking, and incident alerts.
+
+### Testing
+
+We conducted an initial usability test with four participants, covering key journeys such as onboarding, route planning, transfers, favorites, schedules, and incident reporting.
+
+<CaseImage src={walkthrough} alt="Animated walkthrough of the Transita wireframe prototype, from onboarding to route results" />
+
+Testing revealed opportunities to improve clarity and navigation, leading us to refine the information architecture, redesign key screens, and optimize incident reporting.
+
+<CaseImage src={iterations1} alt="First and second prototypes of the route detail and route search screens, showing the changes after usability testing" />
+
+<CaseImage src={iterations2} alt="First and second prototypes of the incident report and map home screens, showing the changes after usability testing" />
+
+Even with limited functionality in the initial prototype, users saw strong potential in Transita to reduce uncertainty when using public transportation.
+
+## Final UI
+
+The visual direction was designed to communicate trust and reliability through a modern, technology-driven interface, contrasting with the uncertainty of the existing public transportation experience.
+
+<CaseImage src={finalUi} alt="Final Transita UI: home with saved buses, trip planning, available routes, and search results with schedules" />

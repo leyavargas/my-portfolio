@@ -1,0 +1,81 @@
+---
+title: Purrfect Paws
+summary: Purrfect Paws is a mobile app designed to support cat owners in caring for their feline companions. From health records and appointment reminders to playtime alerts, the app brings everything a cat parent needs in one space. Because cats aren’t just pets, they’re royalty. And they deserve the purrfect assistant.
+excerpt: A mobile app that helps cat owners care for their feline companions
+client: Purrfect Paws
+role: UI Design, Brand, Naming, Prototyping
+year: 2024
+cover: ./purrfect-paws/00-header.jpg
+accent: '#f7efda'
+order: 3
+---
+
+import CaseImage from '../../components/CaseImage.astro';
+import stats from './purrfect-paws/01-research-stats.jpg';
+import quoteRodan from './purrfect-paws/02-quote-rodan.jpg';
+import quoteGalaxy from './purrfect-paws/03-quote-galaxy.jpg';
+import homeScreens from './purrfect-paws/04-home-screens.jpg';
+import profileScreens from './purrfect-paws/05-profile-screens.jpg';
+import identity from './purrfect-paws/06-visual-identity.jpg';
+import appIcon from './purrfect-paws/07-app-icon.jpg';
+import CaseVideo from '../../components/CaseVideo.astro';
+import protoInfo from './purrfect-paws/08-prototype-info.mp4';
+import protoInfoPoster from './purrfect-paws/08-prototype-info-poster.jpg';
+import protoProfile from './purrfect-paws/09-prototype-profile.mp4';
+import protoProfilePoster from './purrfect-paws/09-prototype-profile-poster.jpg';
+
+## Research
+
+Secondary research examined the gap between cat and dog care, highlighting how misunderstandings about cats’ behavior and needs can create barriers to appropriate care.
+
+Three themes informed the product concept:
+
+- **Subtle signs of illness.** Cats often hide pain, making behavioral changes easy to overlook.
+- **Stress around vet visits.** Preparing for appointments and finding cat-friendly care can be challenging.
+- **The “low-maintenance” myth.** Perceptions of independence can lead owners to underestimate cats’ need for play, routine, and preventive care.
+
+<CaseImage src={stats} alt="Research stats: only 47% of cat owners play with their cat regularly; 57% of cat owners vs. 74% of dog owners visited a vet in the past year; 55 of about 850 Cat Friendly clinics are in Latin America" />
+
+<div class="image-row image-row--2">
+  <CaseImage src={quoteRodan} alt="Quote: “Cat owners are often unaware of the medical needs of their cat.” Dr. Ilona Rodan, Journal of Feline Medicine and Surgery (2010)" />
+  <CaseImage src={quoteGalaxy} alt="Quote: “They still look at cats through dog-colored glasses.” Jackson Galaxy, feline behavior expert (HuffPost, 2019)" />
+</div>
+
+## Product Concept and UI
+
+Purrfect Paws brings together educational guidance, care management, and connected tools to support everyday cat care, with features informed by research.
+
+The home screen provides general care guidance, from information on household hazards and common cat myths to help finding specialized feline veterinarians.
+
+<CaseImage src={homeScreens} alt="Home screen with care topics, plus the What not to do and Improve your relationship guides" />
+
+Each cat’s profile provides a dedicated space to organize their individual care, combining practical features such as health records with sentimental touches like a paw-print keepsake.
+
+<CaseImage src={profileScreens} alt="Profiles screen with two cats, Milo’s profile with options to add health records, a paw print, a feeder, a GPS finder, and a vet appointment, and the vet appointment calendar" />
+
+## Visual Direction
+
+The visual identity balances softness with a bold, quirky, and slightly irreverent personality, capturing the playful nature of cats and the unique bond they share with their owners. This approach shaped the creative direction across the logo, color palette, typography, and photography.
+
+<CaseImage src={identity} alt="Visual identity: Purrfect Paws heart-shaped logo, color palette with Purrfect black, Purrfect white, Nose pink, Paw pink, and Cat eye, and the clover-shaped photographic style" />
+
+<CaseImage src={appIcon} alt="Close-up of an iPhone home screen with the Purrfect Paws app icon" />
+
+## Prototypes
+
+The prototype explores navigation between care topics, cat profiles, and appointment planning. A floating navigation bar provides access to key areas while keeping the main content visible.
+
+<div class="image-row image-row--2">
+  <figure>
+    <CaseVideo src={protoInfo} poster={protoInfoPoster} label="Prototype animation scrolling through the Improve your relationship guide" />
+    <figcaption>The homepage prioritizes the features users access most often.</figcaption>
+  </figure>
+  <figure>
+    <CaseVideo src={protoProfile} poster={protoProfilePoster} label="Prototype animation of the home screen using the floating navigation bar" />
+    <figcaption>Floating navigation enables quick screen switching while maximizing space.</figcaption>
+  </figure>
+</div>
+
+## Next Steps
+
+Further development would focus on testing whether owners can find and use features without assistance, and whether their placement on the home screen or within individual cat profiles matches users’ expectations. These findings would guide adjustments to the app’s structure and navigation before expanding the concept.

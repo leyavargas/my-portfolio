@@ -6,8 +6,8 @@
   --line: #e6e3dd;
   --accent: #4b3cfa;
 
-  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-display: 'Fraunces', Georgia, serif;
+  --font-sans: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: var(--font-sans);
 
   --max: 72rem;
   --gutter: clamp(1.25rem, 4vw, 2.5rem);
@@ -49,8 +49,8 @@ h2,
 h3 {
   font-family: var(--font-display);
   font-weight: 500;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   margin: 0 0 0.5em;
 }
 
@@ -70,7 +70,7 @@ h3 {
 
 .tag {
   display: inline-block;
-  font-size: 0.8125rem;
+  font-size: 0.73125rem; /* 10% más chico que 0.8125rem; el padding en em escala igual */
   padding: 0.2em 0.75em;
   border: 1px solid var(--line);
   border-radius: 999px;

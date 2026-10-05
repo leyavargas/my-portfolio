@@ -1,0 +1,468 @@
+---
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getProjects } from '../../lib/projects';
+import NextProjects from '../../components/NextProjects.astro';
+import GlowButton from '../../components/GlowButton.astro';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project, i) => ({
+    params: { id: project.id },
+    // Los demás proyectos, empezando por el siguiente y dando la vuelta.
+    props: { project, others: [...projects.slice(i + 1), ...projects.slice(0, i)] },
+  }));
+}
+
+const { project, others } = Astro.props;
+const { title, summary, client, role, collaboration, year, cover, accent, impact } = project.data;
+
+const { Content } = await render(project);
+
+const facts = [
+  { label: 'Client', value: client },
+  { label: 'Role', value: role },
+  { label: 'Collaboration', value: collaboration },
+  { label: 'Year', value: year },
+].filter((f) => f.value);
+---
+
+<BaseLayout title={title} description={summary} hideHeader background="#fff">
+  <article>
+    <div class="hero" style={`background: ${accent}`}>
+      {
+        cover && (
+          <Image
+            src={cover}
+            alt=""
+            widths={[1280, 1920, 2560, 3840]}
+            sizes="100vw"
+            quality={92}
+            loading="eager"
+            fetchpriority="high"
+          />
+        )
+      }
+      <div class="scroll-hint">
+        <GlowButton href="#overview" label="Scroll to Explore" arrowDown />
+      </div>
+    </div>
+
+    <!-- Todo lo que sigue sube encima del hero (que queda fijo), como "Work" en el inicio. -->
+    <div class="sheet">
+      <header class="overview" id="overview">
+        <div class="container">
+          <a class="back" href="/" aria-label="Home">
+            <span class="back-icon" aria-hidden="true">
+              <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M13 8H3M7 4 3 8l4 4" />
+              </svg>
+            </span>
+            <span class="back-label" aria-hidden="true">
+              {[...'Home'].map((char, i) => <span class="char" style={`--i: ${i}`}>{char}</span>)}
+            </span>
+          </a>
+          <h1>{title}</h1>
+          <div class="intro">
+            <dl class="facts">
+              {
+                facts.map(({ label, value }) => (
+                  <div>
+                    <dt>{label}</dt>
+                    <dd>{value}</dd>
+                  </div>
+                ))
+              }
+            </dl>
+            <p class="summary">{summary}</p>
+          </div>
+          {
+            impact.length > 0 && (
+              <section class="impact" aria-labelledby="impact-title">
+                <h2 id="impact-title">Impact</h2>
+                <ul>
+                  {impact.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </section>
+            )
+          }
+        </div>
+      </header>
+
+      <div class="body">
+        <div class="container prose">
+          <Content />
+        </div>
+
+        {others.length > 0 && <NextProjects projects={others} />}
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  /* Hero a pantalla completa. Queda fijo al hacer scroll y el overview sube encima. */
+  .hero {
+    position: sticky;
+    top: 0;
+    z-index: 0;
+    height: 100svh;
+    min-height: 28rem;
+    overflow: hidden;
+  }
+  .hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  /* Botón "Scroll to Explore" (mismo estilo que "See My Work"), centrado abajo del hero. */
+  .scroll-hint {
+    position: absolute;
+    left: 50%;
+    bottom: clamp(1rem, 2vw, 1.75rem);
+    transform: translateX(-50%);
+  }
+  /* Los heros de los proyectos son claros: vidrio con un tinte oscuro para que el texto blanco se lea. */
+  .scroll-hint :global(.glow-button) {
+    background: rgb(8 14 30 / 0.32);
+    /* 20% más chico que "See My Work" (texto, padding e ícono). */
+    font-size: calc(clamp(1rem, 1.4vw, 1.15rem) * 0.8);
+    padding: 0.8rem 1.92rem;
+  }
+  .scroll-hint :global(.glow-button svg) {
+    width: 11.2px;
+    height: 11.2px;
+  }
+  /* La hoja que tapa el hero: overview negro + contenido. */
+  .sheet {
+    position: relative;
+    z-index: 1;
+  }
+  /* Mismo espacio antes de "Next project" (fin del contenido → línea) y después
+     (imágenes → footer): --section-end. */
+  .body {
+    --section-end: calc(clamp(4rem, 8vw, 6rem) + 1.5rem); /* el espacio verde original: ~120px escritorio */
+    background: var(--bg);
+    padding-bottom: calc(var(--section-end) * 1.32); /* debajo de "Next project": +20% y luego +10% */
+  }
+  :global(main:has(.sheet)) {
+    padding-bottom: 0; /* el espacio antes del footer lo da .body */
+  }
+
+  .overview {
+    /* El botón "Work" queda centrado entre el borde superior del fondo negro y la parte de arriba
+       de las mayúsculas del título, sin mover el título:
+       P = padding original, M = margen original bajo el botón,
+       E = espacio vacío sobre las mayúsculas del título (0.1985em en Space Grotesk, line-height 1.1). */
+    --pad: clamp(4rem, 9vw, 8rem);
+    --back-gap: clamp(1.5rem, 3vw, 2.25rem);
+    --title-size: clamp(2.5rem, 7vw, 4.5rem);
+    --title-inset: calc(0.1985 * var(--title-size));
+    background: #000;
+    color: #fff;
+    padding-block: calc((var(--pad) + var(--back-gap) + var(--title-inset)) / 2) var(--pad);
+  }
+  /* Botón de volver: píldora solo con contorno (sin relleno), con las mismas animaciones
+     que "Scroll to Explore": destello que recorre el borde y letras que ruedan al hover. */
+  @property --glow-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+  }
+  .back {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: calc((var(--pad) + var(--back-gap) - var(--title-inset)) / 2);
+    padding: 0.45rem 1rem 0.45rem 0.8rem;
+    border-radius: 999px;
+    color: rgb(255 255 255 / 0.75);
+    font-size: 0.95rem;
+    line-height: 1;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .back::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background:
+      conic-gradient(
+        from var(--glow-angle),
+        transparent 0deg,
+        rgb(255 255 255 / 0.95) 30deg,
+        transparent 80deg,
+        transparent 360deg
+      ),
+      rgb(255 255 255 / 0.45);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: back-glow 4s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes back-glow {
+    to {
+      --glow-angle: 360deg;
+    }
+  }
+  .back:hover {
+    color: #fff;
+  }
+  .back-icon {
+    display: grid;
+  }
+  .back-label {
+    display: inline-flex;
+    overflow: hidden;
+    padding-block: 0.15em;
+  }
+  .back .char {
+    display: inline-block;
+  }
+  .back:hover .back-icon,
+  .back:focus-visible .back-icon {
+    animation: back-arrow 0.5s cubic-bezier(0.6, 0, 0.2, 1) both;
+  }
+  .back:hover .char,
+  .back:focus-visible .char {
+    animation: back-roll 0.5s cubic-bezier(0.6, 0, 0.2, 1) both;
+    animation-delay: calc(60ms + var(--i) * 28ms);
+  }
+  @keyframes back-roll {
+    45% {
+      transform: translateY(-110%) rotate(-8deg);
+      opacity: 0;
+    }
+    46% {
+      transform: translateY(110%) rotate(8deg);
+      opacity: 0;
+    }
+    100% {
+      transform: none;
+      opacity: 1;
+    }
+  }
+  @keyframes back-arrow {
+    45% {
+      transform: translateX(-110%);
+      opacity: 0;
+    }
+    46% {
+      transform: translateX(110%);
+      opacity: 0;
+    }
+    100% {
+      transform: none;
+      opacity: 1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .back::before,
+    .back:hover .char,
+    .back:hover .back-icon {
+      animation: none;
+    }
+  }
+  h1 {
+    font-size: var(--title-size);
+    font-weight: 400;
+    margin: 0 0 clamp(2rem, 4vw, 3rem);
+  }
+  /* Columnas compartidas por la intro y por Impact, para que queden alineadas. */
+  .overview {
+    --cols: minmax(0, 5fr) minmax(0, 7fr);
+    --col-gap: clamp(2rem, 6vw, 6rem);
+  }
+  .intro {
+    display: grid;
+    grid-template-columns: var(--cols);
+    gap: 2.5rem var(--col-gap);
+    align-items: start;
+  }
+  .facts {
+    margin: 0;
+    max-width: 22rem;
+  }
+  .facts div + div {
+    margin-top: 1.5rem; /* 24px entre categorías */
+  }
+  dt {
+    color: rgb(255 255 255 / 0.55);
+    font-weight: 300;
+  }
+  dd {
+    margin: 0.25rem 0 0;
+    font-weight: 400;
+  }
+  .summary {
+    font-size: 1.3rem;
+    font-weight: 300;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .impact {
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+    padding-top: clamp(2rem, 4vw, 2.5rem);
+    border-top: 0.5pt solid rgb(255 255 255 / 0.45);
+  }
+  .impact h2 {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 500;
+    margin: 0 0 1.75rem;
+  }
+  .impact ul {
+    display: grid;
+    grid-template-columns: var(--cols);
+    gap: 1.25rem var(--col-gap);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-weight: 400; /* mismo peso y tamaño que los valores de Role / Year */
+  }
+
+  @media (max-width: 48rem) {
+    .intro,
+    .impact ul {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Contenido del caso de estudio (Markdown/MDX). */
+  /* Mismo ancho y márgenes que el overview (.container). */
+  .prose {
+    padding-block: clamp(4rem, 8vw, 6rem) var(--section-end);
+    font-size: 1.125rem;
+    font-weight: 300; /* Space Grotesk Light para el texto; los títulos y negritas mantienen su peso */
+    line-height: 1.7;
+  }
+  .prose :global(p) {
+    margin: 0 0 1.4em;
+  }
+  .prose :global(h2) {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 500;
+    margin: var(--block-gap) 0 0.7em;
+  }
+  .prose > :global(:last-child) {
+    margin-bottom: 0;
+  }
+  .prose :global(h2:first-child) {
+    margin-top: 0;
+  }
+  /* Subtítulos de los casos de estudio (mismo estilo en todos los proyectos). */
+  .prose :global(h3) {
+    font-size: calc(clamp(1.26rem, 2.25vw, 1.575rem) - 4px);
+    font-weight: 500;
+    margin: 2em 0 0.8em;
+  }
+  .prose :global(ol),
+  .prose :global(ul) {
+    padding-left: 1.5em;
+    margin: 0 0 1.4em;
+  }
+  .prose :global(li + li) {
+    margin-top: 0.4em;
+  }
+  .prose :global(strong) {
+    font-weight: 600;
+  }
+  .prose :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: 0;
+    margin-block: 2.5rem;
+  }
+  /* Imágenes, filas, carruseles y videos seguidos se separan con el mismo espacio
+     que hay entre las columnas de una fila (--media-gap), en escritorio y en celular. */
+  .prose {
+    --media-gap: clamp(0.75rem, 2vw, 1.25rem);
+    /* Espacio entre bloques de texto y medios (imagen → titular y texto → imagen):
+       el mismo arriba y abajo de cada bloque de texto, para que quede centrado. */
+    --block-gap: clamp(3rem, 5.5vw, 4.4rem);
+  }
+  .prose > :global(:is(img, video, .image-row, .image-carousel)) {
+    margin-block: var(--block-gap);
+  }
+  .prose > :global(:is(img, video, .image-row, .image-carousel):has(+ :is(img, video, .image-row, .image-carousel))) {
+    margin-bottom: 0;
+  }
+  .prose > :global(:is(img, video, .image-row, .image-carousel) + :is(img, video, .image-row, .image-carousel)) {
+    margin-top: var(--media-gap);
+  }
+  /* Fila de tres imágenes (p. ej. bici · grupo · moto). */
+  .prose :global(.image-row) {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--media-gap);
+  }
+  /* Variante de dos columnas (citas, prototipos), con leyenda opcional debajo. */
+  .prose :global(.image-row--2) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .prose :global(.image-row figure) {
+    margin: 0;
+  }
+  /* Formato de pies de imagen (captions) para todos los casos de estudio:
+     más chico que el texto, en gris y en Regular (no Light) para que se lea bien.
+     #6b6b6b sobre blanco = contraste 5.3:1 (cumple WCAG AA). */
+  .prose :global(figcaption) {
+    margin-top: 0.75rem;
+    font-size: 0.9375rem; /* 15px */
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .prose :global(.image-row img) {
+    margin: 0;
+  }
+  /* Fila de tres: misma altura para las tres imágenes, como en la referencia de DiDi. */
+  .prose :global(.image-row:not(.image-row--2) img) {
+    aspect-ratio: 324 / 417;
+    object-fit: cover;
+  }
+  /* Cifras de impacto en columnas. */
+  .prose :global(.stats) {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+    margin: 2.5rem 0;
+  }
+  /* Mismo tamaño que el texto del contenido; la cifra en negrita. */
+  .prose :global(.stats dt),
+  .prose :global(.stats dd) {
+    margin: 0;
+  }
+  .prose :global(.stats dt) {
+    font-weight: 700;
+  }
+  @media (max-width: 40rem) {
+    .prose :global(.stats) {
+      grid-template-columns: 1fr;
+    }
+    /* En celular, las imágenes de la fila van una debajo de la otra, sin recortar. */
+    .prose :global(.image-row),
+    .prose :global(.image-row--2) {
+      grid-template-columns: 1fr;
+    }
+    .prose :global(.image-row:not(.image-row--2) img) {
+      aspect-ratio: auto;
+    }
+  }
+  .prose :global(blockquote) {
+    margin: 2rem 0;
+    padding-left: 1.5rem;
+    border-left: 3px solid var(--accent);
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+  }
+</style>

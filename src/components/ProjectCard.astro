@@ -7,11 +7,13 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { title, summary, tags, cover, accent, year } = project.data;
+const { title, summary, excerpt, role, cover, accent, year } = project.data;
+// Las etiquetas son las mismas del campo Role del overview.
+const tags = role.split(',').map((tag) => tag.trim()).filter(Boolean);
 ---
 
 <article class="card">
-  <a href={`/proyectos/${project.id}/`}>
+  <a href={`/work/${project.id}/`}>
     <div class="cover" style={`--card-accent: ${accent}`}>
       {
         cover ? (
@@ -25,7 +27,7 @@ const { title, summary, tags, cover, accent, year } = project.data;
       <h3>{title}</h3>
       <span class="year">{year}</span>
     </div>
-    <p>{summary}</p>
+    <p>{excerpt ?? summary}</p>
     <ul class="tags">
       {tags.map((tag) => <li class="tag">{tag}</li>)}
     </ul>
@@ -38,8 +40,8 @@ const { title, summary, tags, cover, accent, year } = project.data;
     display: block;
   }
   .cover {
-    aspect-ratio: 4 / 3;
-    border-radius: var(--radius);
+    aspect-ratio: 1.28;
+    border-radius: 0;
     overflow: hidden;
     background: var(--card-accent);
     display: grid;

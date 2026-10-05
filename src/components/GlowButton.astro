@@ -1,0 +1,161 @@
+---
+// Botón píldora oscuro con un brillo que recorre el borde y, al hover,
+// las letras "ruedan" una por una (salen hacia arriba y vuelven desde abajo).
+interface Props {
+  href: string;
+  label: string;
+  /** Muestra la flecha que baja (↴) después del texto. */
+  arrowDown?: boolean;
+  class?: string;
+}
+
+const { href, label, arrowDown = false, class: className } = Astro.props;
+const chars = [...label];
+---
+
+<a class:list={['glow-button', className]} href={href} aria-label={label} style={`--count: ${chars.length}`}>
+  <span class="label" aria-hidden="true">
+    {
+      chars.map((char, i) => (
+        <span class="char" style={`--i: ${i}`}>
+          {char === ' ' ? ' ' : char}
+        </span>
+      ))
+    }
+  </span>
+  {
+    arrowDown && (
+      <svg class="icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M2 3h9v10M8 10l3 3 3-3" />
+      </svg>
+    )
+  }
+</a>
+
+<style>
+  /* Ángulo animable para el brillo del borde. */
+  @property --glow-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  .glow-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2.4rem;
+    border-radius: 999px;
+    /* Sin color de relleno: vidrio esmerilado que desenfoca lo que hay detrás. */
+    background: rgb(255 255 255 / 0.04);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
+    color: #fff;
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    line-height: 1;
+    text-decoration: none;
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.08),
+      0 10px 30px rgb(0 0 0 / 0.15);
+    transition: transform 0.3s ease;
+  }
+  .glow-button:hover {
+    transform: translateY(-1px);
+  }
+
+  /* Borde fino con un destello que gira alrededor de la píldora. */
+  .glow-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background:
+      conic-gradient(
+        from var(--glow-angle),
+        transparent 0deg,
+        rgb(255 255 255 / 0.9) 30deg,
+        transparent 80deg,
+        transparent 360deg
+      ),
+      rgb(255 255 255 / 0.12);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: glow-spin 4s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes glow-spin {
+    to {
+      --glow-angle: 360deg;
+    }
+  }
+
+  .icon {
+    margin-left: 0.6em;
+    flex: none;
+  }
+  .glow-button:hover .icon,
+  .glow-button:focus-visible .icon {
+    animation: icon-drop 0.5s cubic-bezier(0.6, 0, 0.2, 1) both;
+    animation-delay: calc(var(--count, 12) * 28ms);
+  }
+  @keyframes icon-drop {
+    45% {
+      transform: translateY(110%);
+      opacity: 0;
+    }
+    46% {
+      transform: translateY(-110%);
+      opacity: 0;
+    }
+    100% {
+      transform: none;
+      opacity: 1;
+    }
+  }
+
+  /* Letras que ruedan al hover, con un pequeño retraso entre cada una. */
+  .label {
+    display: inline-flex;
+    overflow: hidden;
+    padding-block: 0.15em;
+  }
+  .char {
+    display: inline-block;
+  }
+  .glow-button:hover .char,
+  .glow-button:focus-visible .char {
+    animation: char-roll 0.5s cubic-bezier(0.6, 0, 0.2, 1) both;
+    animation-delay: calc(var(--i) * 28ms);
+  }
+  @keyframes char-roll {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    45% {
+      transform: translateY(-110%) rotate(-8deg);
+      opacity: 0;
+    }
+    46% {
+      transform: translateY(110%) rotate(8deg);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glow-button::before,
+    .glow-button:hover .char,
+    .glow-button:hover .icon {
+      animation: none;
+    }
+  }
+</style>

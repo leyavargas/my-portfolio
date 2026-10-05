@@ -1,41 +1,67 @@
 ---
 import { site } from '../data/site';
 const year = new Date().getFullYear();
+
+// Enlaces del pie: Home + redes. Los externos abren en otra pestaña.
+const links = [{ label: 'Home', href: '/', external: false }, ...site.social.map((s) => ({ ...s, external: true }))];
 ---
 
-<footer id="contacto" class="container">
-  <div class="cta">
-    <p class="eyebrow">Contacto</p>
-    <h2>¿Trabajamos juntos?</h2>
-    <a class="mail" href={`mailto:${site.email}`}>{site.email}</a>
-  </div>
-  <div class="bottom">
-    <span>© {year} {site.name}</span>
-    <ul>
-      {
-        site.social.map(({ label, href }) => (
-          <li>
-            <a href={href} target="_blank" rel="noopener noreferrer">
-              {label}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+<footer id="contact">
+  <div class="container">
+    <div class="top">
+      <div class="cta">
+        <h2>Let's work together</h2>
+        <a class="mail" href={`mailto:${site.email}`}>{site.email}</a>
+      </div>
+      <ul>
+        {
+          links.map(({ label, href, external }) => (
+            <li>
+              <a href={href} {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+                <span class="arrow" aria-hidden="true">↗</span>
+                {label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div class="bottom">
+      <span>© {year} {site.name}</span>
+    </div>
   </div>
 </footer>
 
 <style>
   footer {
-    margin-top: 6rem;
-    padding-block: 4rem 2rem;
-    border-top: 1px solid var(--line);
+    --footer-pad: 7.05rem; /* footer 15% más alto que antes (378px → ~435px en escritorio) */
+    position: relative;
+    z-index: 1;
+    padding-block: var(--footer-pad);
+    background: #000;
+    color: #fff;
+  }
+  /* Fila superior: título + correo a la izquierda, enlaces a la derecha a la altura del título. */
+  .top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+  footer {
+    --h2-size: clamp(2.1rem, 6.3vw, 3.675rem); /* 5% más grande que antes */
   }
   h2 {
-    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-size: var(--h2-size);
+    margin-top: 0;
   }
   .mail {
-    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-size: 0.9625rem; /* 10% más grande que 14px */
+    text-decoration: none;
+  }
+  .mail:hover {
+    text-decoration: underline;
     text-underline-offset: 0.2em;
   }
   .bottom {
@@ -44,14 +70,37 @@ const year = new Date().getFullYear();
     gap: 1rem;
     justify-content: space-between;
     margin-top: 4rem;
-    color: var(--muted);
+    color: rgb(255 255 255 / 0.6);
     font-size: 0.9rem;
   }
+  /* Enlaces en columna, uno debajo del otro, en blanco.
+     El margen alinea la parte de arriba de las mayúsculas de "Home" con la del título
+     (métricas de Space Grotesk: el borde superior de las mayúsculas queda a 0.1985em
+     del renglón del título con line-height 1.1, y a 0.453em del de los enlaces con 1.6). */
   ul {
     display: flex;
-    gap: 1.5rem;
+    flex-direction: column;
+    gap: 0.6rem;
     list-style: none;
-    margin: 0;
+    margin: calc(0.1985 * var(--h2-size) - 0.453em) 0 0;
     padding: 0;
+  }
+  ul a {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.35em;
+    color: #fff;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+  ul a:hover {
+    opacity: 0.7;
+  }
+  .arrow {
+    font-size: 0.85em;
+    transition: transform 0.2s ease;
+  }
+  ul a:hover .arrow {
+    transform: translate(2px, -2px);
   }
 </style>

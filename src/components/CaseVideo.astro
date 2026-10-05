@@ -1,0 +1,51 @@
+---
+// Video en loop para los casos de estudio (reemplaza a los GIF: pesa mucho menos).
+// Se reproduce solo, sin sonido, y se pausa cuando sale de la pantalla.
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: string;
+  poster: ImageMetadata;
+  label: string;
+}
+
+const { src, poster, label } = Astro.props;
+---
+
+<video
+  class="case-video"
+  data-case-video
+  src={src}
+  poster={poster.src}
+  width={poster.width}
+  height={poster.height}
+  muted
+  loop
+  playsinline
+  preload="metadata"
+  aria-label={label}
+></video>
+
+<script>
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const videos = document.querySelectorAll<HTMLVideoElement>('[data-case-video]');
+  if (!reduceMotion) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(({ target, isIntersecting }) => {
+        const v = target as HTMLVideoElement;
+        if (isIntersecting) v.play().catch(() => {});
+        else v.pause();
+      });
+    }, { threshold: 0.25 });
+    videos.forEach((v) => io.observe(v));
+  }
+</script>
+
+<style>
+  .case-video {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #000;
+  }
+</style>

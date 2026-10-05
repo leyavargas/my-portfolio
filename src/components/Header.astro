@@ -2,16 +2,21 @@
 import { site } from '../data/site';
 
 const links = [
-  { href: '/#proyectos', label: 'Proyectos' },
-  { href: '/sobre-mi', label: 'Sobre mí' },
-  { href: '/#contacto', label: 'Contacto' },
+  { href: '/#work', label: 'Work' },
+  { href: '/about', label: 'About' },
 ];
 const path = Astro.url.pathname;
+
+interface Props {
+  /** Nav transparente con texto blanco, encima del hero. */
+  overlay?: boolean;
+}
+const { overlay = false } = Astro.props;
 ---
 
-<header class="container">
-  <a href="/" class="logo">{site.name}</a>
-  <nav aria-label="Principal">
+<header class:list={['container', { overlay }]}>
+  <a href="/" class="logo" aria-label={`${site.name}, home`}>Leyla</a>
+  <nav aria-label="Main">
     <ul>
       {
         links.map(({ href, label }) => (
@@ -36,8 +41,10 @@ const path = Astro.url.pathname;
     padding-block: 1.5rem;
   }
   .logo {
-    font-family: var(--font-display);
     font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text);
     text-decoration: none;
   }
   ul {
@@ -48,6 +55,8 @@ const path = Astro.url.pathname;
     padding: 0;
   }
   nav a {
+    font-size: 0.9rem; /* ~14px: 2pt menos que el texto base (17px) */
+    font-weight: 600;
     text-decoration: none;
     color: var(--muted);
     transition: color 0.2s;
@@ -55,5 +64,22 @@ const path = Astro.url.pathname;
   nav a:hover,
   nav a[aria-current='page'] {
     color: var(--text);
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+  }
+  .overlay .logo {
+    color: #fff;
+  }
+  .overlay nav a {
+    color: rgb(255 255 255 / 0.85);
+  }
+  .overlay nav a:hover {
+    color: #fff;
   }
 </style>

@@ -1,0 +1,172 @@
+---
+// Carrusel "Next project": portadas de los demás proyectos (empezando por el siguiente).
+// El título y el velo se ven por defecto; al pasar el cursor se ocultan y queda la imagen limpia.
+// Alineado al contenido a la izquierda y "a sangre" a la derecha; se arrastra con el mouse.
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  projects: CollectionEntry<'projects'>[];
+}
+
+const { projects } = Astro.props;
+---
+
+<nav class="next-projects" aria-labelledby="next-projects-title">
+  <div class="container">
+    <p id="next-projects-title" class="eyebrow">Next project</p>
+  </div>
+  <div class="carousel" data-drag-scroll>
+    <ul class="track">
+      {
+        projects.map(({ id, data }) => (
+          <li class="slide">
+            <a href={`/work/${id}/`} class="card" style={`--card-accent: ${data.accent}`}>
+              {data.cover && (
+                <Image src={data.cover} alt="" widths={[640, 960, 1400]} sizes="(min-width: 54rem) 33rem, 62vw" />
+              )}
+              <span class="title">
+                {data.title} <span aria-hidden="true">→</span>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</nav>
+
+<script>
+  // Arrastrar con el mouse (touch y trackpad ya funcionan de forma nativa).
+  document.querySelectorAll<HTMLElement>('[data-drag-scroll]').forEach((el) => {
+    let startX = 0;
+    let startScroll = 0;
+    let dragging = false;
+    let moved = false;
+
+    el.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      dragging = true;
+      moved = false;
+      startX = e.clientX;
+      startScroll = el.scrollLeft;
+    });
+    el.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      const dx = e.clientX - startX;
+      if (!moved && Math.abs(dx) > 5) {
+        moved = true;
+        el.setPointerCapture(e.pointerId);
+        el.classList.add('is-dragging');
+      }
+      if (moved) el.scrollLeft = startScroll - dx;
+    });
+    const end = () => {
+      dragging = false;
+      el.classList.remove('is-dragging');
+    };
+    el.addEventListener('pointerup', end);
+    el.addEventListener('pointercancel', end);
+    // Si fue un arrastre, que no se abra el proyecto al soltar.
+    el.addEventListener(
+      'click',
+      (e) => {
+        if (moved) {
+          e.preventDefault();
+          e.stopPropagation();
+          moved = false;
+        }
+      },
+      true,
+    );
+    el.addEventListener('dragstart', (e) => e.preventDefault());
+  });
+</script>
+
+<style>
+  /* La línea respeta los márgenes del contenido; el carrusel sí llega al borde derecho. */
+  .eyebrow {
+    border-top: 1px solid var(--line);
+    padding-top: 3rem;
+    margin: 0 0 1.5rem;
+  }
+  .carousel {
+    --inset: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--inset);
+    scrollbar-width: none;
+    cursor: grab;
+  }
+  .carousel::-webkit-scrollbar {
+    display: none;
+  }
+  .carousel.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    user-select: none;
+  }
+  .track {
+    display: flex;
+    gap: clamp(1rem, 2vw, 1.75rem);
+    list-style: none;
+    margin: 0;
+    padding: 0 var(--inset);
+    width: max-content;
+  }
+  .slide {
+    flex: 0 0 auto;
+    width: min(33rem, 61.5vw); /* 25% más chicas que antes (44rem, 82vw) */
+    scroll-snap-align: start;
+  }
+  .card {
+    position: relative;
+    display: block;
+    aspect-ratio: 1.28;
+    overflow: hidden;
+    background: var(--card-accent);
+    color: #fff;
+    text-decoration: none;
+  }
+  .card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  /* Por defecto: velo oscuro + título. Al hover / foco se ocultan y se ve la imagen limpia. */
+  .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgb(0 0 0 / 0.55);
+    transition: opacity 0.35s ease;
+  }
+  .title {
+    position: absolute;
+    left: clamp(1rem, 3vw, 2rem);
+    right: clamp(1rem, 3vw, 2rem);
+    bottom: clamp(1rem, 3vw, 1.75rem);
+    z-index: 1;
+    font-size: 24px; /* fijo en escritorio y celular */
+    line-height: 1.1;
+    transition:
+      opacity 0.35s ease,
+      transform 0.35s ease;
+  }
+  .card:hover img,
+  .card:focus-visible img {
+    transform: scale(1.03);
+  }
+  .card:hover::after,
+  .card:focus-visible::after,
+  .card:hover .title,
+  .card:focus-visible .title {
+    opacity: 0;
+  }
+  .card:hover .title,
+  .card:focus-visible .title {
+    transform: translateY(0.5rem);
+  }
+</style>
