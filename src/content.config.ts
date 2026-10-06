@@ -1,12 +1,15 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { SITE_IDS } from './data/sites';
 
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
+      // Sitios donde aparece el proyecto (un solo archivo para todos).
+      sites: z.array(z.enum(SITE_IDS)).min(1),
       summary: z.string(),
       // Texto corto para la tarjeta del inicio; si falta, se usa `summary`.
       excerpt: z.string().optional(),

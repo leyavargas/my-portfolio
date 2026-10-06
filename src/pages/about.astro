@@ -1,24 +1,23 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { currentSite } from '../data/sites';
+
+const { about } = currentSite;
+
+// Texto provisional (sitio Brand): marca visible para no publicarlo por error.
+// Va en línea (no en <style>) para que el sitio UX quede idéntico.
+const pendingStyle = 'padding: 1rem 1.25rem; border: 2px dashed #e0a100; background: #fff8e1;';
 ---
 
 <BaseLayout title="About" background="#fff">
   <section class="container about">
-    <h1>Hello, hello!</h1>
-    <div class="text">
-      <p>
-        I’m Leyla, senior designer with 10 years of experience in brand and visual design, now
-        focused on digital product.
-      </p>
-      <p>
-        Around 2020, at DiDi, I started applying product thinking to brand work. As Senior Digital
-        Designer, I led two interconnected design systems across eight Latin American markets, using
-        methods like user surveys, heuristic evaluation, and iterative testing.
-      </p>
-      <p>
-        I’m drawn to complex problems that need both systematic thinking and clear visual direction,
-        and I believe good design makes complexity easier to navigate.
-      </p>
+    <h1>{about.title}</h1>
+    <div
+      class="text"
+      style={about.pending ? pendingStyle : undefined}
+      data-pending={about.pending ? 'true' : undefined}
+    >
+      {about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
     </div>
   </section>
 </BaseLayout>

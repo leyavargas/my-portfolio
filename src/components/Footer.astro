@@ -1,9 +1,13 @@
 ---
 import { site } from '../data/site';
+import { currentSite } from '../data/sites';
 const year = new Date().getFullYear();
 
 // Enlaces del pie: Home + redes. Los externos abren en otra pestaña.
-const links = [{ label: 'Home', href: '/', external: false }, ...site.social.map((s) => ({ ...s, external: true }))];
+const links = [
+  { label: 'Home', href: '/', external: false },
+  ...[...site.social, ...currentSite.footerLinks].map((s) => ({ ...s, external: true })),
+];
 ---
 
 <footer id="contact">

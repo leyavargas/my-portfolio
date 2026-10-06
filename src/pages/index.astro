@@ -4,6 +4,7 @@ import ProjectCard from '../components/ProjectCard.astro';
 import LiquidHero from '../components/LiquidHero.astro';
 import GlowButton from '../components/GlowButton.astro';
 import { getProjects } from '../lib/projects';
+import { currentSite } from '../data/sites';
 
 const projects = await getProjects();
 ---
@@ -13,11 +14,24 @@ const projects = await getProjects();
     <!-- La tira mide lo mismo que la primera línea del titular (lo calcula el script de abajo). -->
     <div class="hero-copy">
       <ul class="disciplines" aria-label="Disciplines">
-        <li>Product Design</li>
-        <li>UX/UI</li>
-        <li>Visual Systems</li>
+        {currentSite.disciplines.map((discipline) => <li>{discipline}</li>)}
       </ul>
-      <h1>Product designer with a <br class="br-wide" />background in brand identity</h1>
+      <h1
+        style={
+          currentSite.heroTitleScale
+            ? `font-size: calc(clamp(2.25rem, 5.5vw, 4.5rem) * ${currentSite.heroTitleScale})`
+            : undefined
+        }
+      >
+        {
+          currentSite.heroTitle.map((line, i, lines) => (
+            <>
+              {i > 0 && <br class="br-wide" />}
+              {i < lines.length - 1 ? `${line} ` : line}
+            </>
+          ))
+        }
+      </h1>
     </div>
     <div class="hero-cta">
       <GlowButton href="#work" label="See My Work" />
