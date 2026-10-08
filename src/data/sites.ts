@@ -59,7 +59,9 @@ export const sites: Record<SiteId, SiteConfig> = {
   },
 };
 
-const raw = (import.meta.env.PUBLIC_SITE ?? 'ux').trim().toLowerCase();
+// Si PUBLIC_SITE no está definida, o está vacía, se construye el sitio UX por defecto.
+const DEFAULT_SITE: SiteId = 'ux';
+const raw = (import.meta.env.PUBLIC_SITE ?? '').trim().toLowerCase() || DEFAULT_SITE;
 if (!(SITE_IDS as readonly string[]).includes(raw)) {
   throw new Error(`PUBLIC_SITE="${raw}" no es válido. Usa uno de: ${SITE_IDS.join(', ')}.`);
 }
