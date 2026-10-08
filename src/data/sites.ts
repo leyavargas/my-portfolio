@@ -48,10 +48,9 @@ export const sites: Record<SiteId, SiteConfig> = {
     about: {
       title: 'Hello, hello!',
       paragraphs: [
-        '[PENDING — placeholder text for the Brand site. Replace this with the final About copy.]',
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus.',
+        'I’m Leyla, a senior designer who turns complex ideas into a single image or a complete visual system. With more than ten years of experience, I work between brand strategy and graphic design, taking projects from concept to execution across markets, channels, and contexts. I’m drawn to problems where visual design, systems thinking, and product meet.',
+        'I consider myself a designer first. Illustration has been part of my work from the beginning, first as a practical tool born out of necessity, and later as a deeper practice, formalized with a postgraduate degree from EINA in Barcelona. For me, illustration isn’t decoration, but a way of solving problems that other tools can’t.',
       ],
-      pending: true,
     },
     footerLinks: [
       { label: 'Behance', href: 'https://www.behance.net/leyvsz8659' },

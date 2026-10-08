@@ -21,7 +21,8 @@ const { title, summary, client, role, collaboration, year, cover, accent, impact
 const { Content } = await render(project);
 
 const facts = [
-  { label: 'Client', value: client },
+  // "Clients" en plural cuando hay más de uno (p. ej. "eBay, Dentons & DiDi").
+  { label: client && /,|&/.test(client) ? 'Clients' : 'Client', value: client },
   { label: 'Role', value: role },
   { label: 'Collaboration', value: collaboration },
   { label: 'Year', value: year },
@@ -393,10 +394,12 @@ const facts = [
   .prose > :global(:is(img, video, .image-row, .image-carousel)) {
     margin-block: var(--block-gap);
   }
-  .prose > :global(:is(img, video, .image-row, .image-carousel):has(+ :is(img, video, .image-row, .image-carousel))) {
+  /* (Astro inserta un <script> después de algunos componentes, como el carrusel: se ignora.) */
+  .prose > :global(:is(img, video, .image-row, .image-carousel):has(+ :is(img, video, .image-row, .image-carousel), + script + :is(img, video, .image-row, .image-carousel))) {
     margin-bottom: 0;
   }
-  .prose > :global(:is(img, video, .image-row, .image-carousel) + :is(img, video, .image-row, .image-carousel)) {
+  .prose > :global(:is(img, video, .image-row, .image-carousel) + :is(img, video, .image-row, .image-carousel)),
+  .prose > :global(:is(img, video, .image-row, .image-carousel) + script + :is(img, video, .image-row, .image-carousel)) {
     margin-top: var(--media-gap);
   }
   /* Fila de tres imágenes (p. ej. bici · grupo · moto). */
@@ -415,7 +418,8 @@ const facts = [
   /* Formato de pies de imagen (captions) para todos los casos de estudio:
      más chico que el texto, en gris y en Regular (no Light) para que se lea bien.
      #6b6b6b sobre blanco = contraste 5.3:1 (cumple WCAG AA). */
-  .prose :global(figcaption) {
+  .prose :global(figcaption),
+  .prose :global(.note) {
     margin-top: 0.75rem;
     font-size: 0.9375rem; /* 15px */
     font-weight: 400;

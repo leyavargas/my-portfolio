@@ -1,0 +1,71 @@
+---
+title: DiDi Information Design
+sites: ["brand"]
+summary: Between 2021 and 2022, I designed a series of data-heavy presentations for DiDi across Latin American markets. Each addressed a different audience and purpose, requiring large volumes of information to be translated into clear, usable visual narratives.
+excerpt: "Infographics turning complex data into clear visuals."
+client: DiDi
+role: Information Design, Visual Design
+year: 2021–2022
+cover: ./didi-information-design/00-header.jpg
+accent: '#1c1730'
+order: 5
+---
+
+import ImageCarousel from '../../components/ImageCarousel.astro';
+import crSatisfaction from './didi-information-design/01-cr-satisfaction.jpg';
+import crUsage from './didi-information-design/02-cr-usage.jpg';
+import crPartners from './didi-information-design/03-cr-partners.jpg';
+import colCorruption from './didi-information-design/04-col-corruption.jpg';
+import colPower from './didi-information-design/05-col-power.jpg';
+import driversResults from './didi-information-design/06-drivers-results.jpg';
+import driversSavings from './didi-information-design/07-drivers-savings.jpg';
+import driversPlanning from './didi-information-design/08-drivers-planning.jpg';
+
+## Approach
+
+Each presentation meant turning dense data into clear visuals. Before designing, I identified what mattered, how the information connected, and which format would communicate it best. The visual language then adapted to each audience, purpose, and level of brand presence.
+
+## 01 — Digital Platform Study Costa Rica
+
+Key findings from an April 2022 study by CID Gallup for the Costa Rican Chamber of Commerce, covering drivers, delivery partners, and passengers.
+
+I structured the data so user groups could be compared at a glance, combining different visualization formats to make the differences stand out. Since this was independent research, I chose a tech-oriented look rather than DiDi’s standard brand system.
+
+<ImageCarousel
+  label="Digital Platform Study Costa Rica"
+  images={[
+    { src: crSatisfaction, alt: 'Costa Rica study slide on spending, satisfaction ratings with stars, regulation opinions, and 70% of respondents using platforms to promote a business' },
+    { src: crUsage, alt: 'Costa Rica study slide comparing usage frequency: 75% for mobility platforms and 85% for delivery platforms' },
+    { src: crPartners, alt: 'Costa Rica study slide comparing gender and education of driver partners and delivery partners' },
+  ]}
+/>
+
+## 02 — Understanding Corruption in Colombia
+
+Infographics explaining Colombia’s political and anti-corruption landscape to a general audience.
+
+To make multiple data sources easy to follow, I built a clear hierarchy, used color coding to group related information, and added directional cues to guide readers from key indicators to deeper details.
+
+<ImageCarousel
+  label="Understanding Corruption in Colombia"
+  images={[
+    { src: colCorruption, alt: 'Infographic on Colombia’s fight against corruption: perception index, a 2021 ranking of 15 Latin American countries, and survey results in donut charts' },
+    { src: colPower, alt: 'Infographic on the structure of power in Colombia: composition of the Senate and the House by political party in donut charts' },
+  ]}
+/>
+
+## 03 — DiDi Driver Survey Colombia
+
+Internal survey results on the financial habits and income dependency of DiDi drivers. Unlike the previous projects, this presentation followed DiDi’s brand system.
+
+Rather than sticking to one chart type, I matched each visualization to the data: human figures for people-based insights, and large standalone numbers when the message was clearer without a chart.
+
+<ImageCarousel
+  label="DiDi Driver Survey Colombia"
+  bordered
+  images={[
+    { src: driversResults, alt: 'DiDi driver survey results: education levels, activities before and after joining DiDi, and income generated through DiDi' },
+    { src: driversSavings, alt: 'DiDi driver survey on savings and pensions, with human figures showing 8 out of 10 drivers willing to save for old age' },
+    { src: driversPlanning, alt: 'DiDi driver survey on financial planning, the DiDi savings option, and DiDi benefits, with illustrated drivers holding phones' },
+  ]}
+/>

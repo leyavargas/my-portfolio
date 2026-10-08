@@ -1,0 +1,53 @@
+---
+title: Digital Campaigns
+sites: ["brand"]
+summary: A selection of digital campaign work for eBay, Dentons, and DiDi, including social media, animated web assets, email, and in-app communications for different audiences and markets.
+excerpt: "Digital campaigns for eBay, Dentons, and DiDi."
+client: eBay, Dentons & DiDi
+role: Graphic Design, Illustration
+year: 2020–2026
+cover: ./digital-campaigns/00-header-v2.jpg
+accent: '#d5e1f2'
+order: 3
+---
+
+import CaseImage from '../../components/CaseImage.astro';
+import ImageCarousel from '../../components/ImageCarousel.astro';
+import ecuador from './digital-campaigns/01-orange-passenger-ecuador.jpg';
+import chile from './digital-campaigns/02-orange-passenger-chile.jpg';
+import adaptations from './digital-campaigns/03-orange-passenger-adaptations.jpg';
+import ebayBanner from './digital-campaigns/04-ebay-hero-banner.gif';
+import ebayInstagram from './digital-campaigns/05-ebay-instagram.jpg';
+import dentonsSocial from './digital-campaigns/06-dentons-social.jpg';
+
+## DiDi: The Orange Passenger
+
+“The Orange Passenger” began as an urgent brief for Ecuador, inviting drivers to win cash prizes by picking up a mysterious passenger dressed in DiDi’s signature orange.
+
+With a two-day turnaround and no photography to work with, I built the key visual through illustration. The campaign later expanded to other Latin American markets, including Chile.
+
+<ImageCarousel
+  label="The Orange Passenger key visuals"
+  images={[
+    { src: ecuador, alt: 'Key visual for Ecuador: an illustrated man in an orange suit holding cash next to a phone, with the text El Hombre Naranja llegó a Ecuador, gánate $300' },
+    { src: chile, alt: 'Adaptation for Chile’s national holidays: the orange passenger with a Chilean flag and bunting, with the text Este 18 celebra al estilo DiDi' },
+  ]}
+/>
+
+<CaseImage src={adaptations} alt="Campaign adaptations: a Facebook post, an in-app banner, and an in-app pop-up" />
+
+## eBay
+
+Selected digital assets for eBay, created with POP Agency’s in-house creative team: an animated hero banner for Facebook and an Instagram carousel.
+
+<p class="note">Art direction: Aaron Porvaznik</p>
+
+<CaseImage src={ebayBanner} alt="Animated Facebook hero banner for eBay with the text From weekday hustle to weekend bustle" />
+
+<CaseImage src={ebayInstagram} alt="eBay Instagram carousel with LEGO sets, shown around a phone displaying the post" />
+
+## Dentons
+
+Social media content translating legal topics into clear visuals while working within Dentons’ brand guidelines.
+
+<CaseImage src={dentonsSocial} alt="Dentons LinkedIn carousel on the White House Executive Order on AI Infrastructure, shown next to a phone" />

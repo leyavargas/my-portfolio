@@ -7,12 +7,14 @@ import type { ImageMetadata } from 'astro';
 interface Props {
   images: { src: ImageMetadata; alt: string }[];
   label?: string;
+  /** Borde gris fino (0.5px, color de las líneas divisorias) alrededor de las imágenes. */
+  bordered?: boolean;
 }
 
-const { images, label = 'Image carousel' } = Astro.props;
+const { images, label = 'Image carousel', bordered = false } = Astro.props;
 ---
 
-<div class="image-carousel" data-image-carousel role="region" aria-roledescription="carousel" aria-label={label}>
+<div class:list={['image-carousel', { bordered }]} data-image-carousel role="region" aria-roledescription="carousel" aria-label={label}>
   <div class="viewport" data-viewport tabindex="0">
     {
       images.map(({ src, alt }, i) => (
@@ -118,6 +120,9 @@ const { images, label = 'Image carousel' } = Astro.props;
   }
   .viewport:focus-visible {
     outline-offset: 4px;
+  }
+  .bordered .viewport {
+    border: 0.5px solid var(--line);
   }
   .slide {
     flex: 0 0 100%;
