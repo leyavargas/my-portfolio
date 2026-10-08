@@ -8,6 +8,12 @@ export type SiteId = (typeof SITE_IDS)[number];
 type Link = { label: string; href: string };
 
 interface SiteConfig {
+  /** Dirección pública del sitio (para links absolutos y la vista previa al compartir). */
+  url: string;
+  /** Rol en el título de la pestaña: "Leyla Vargas — <role>". */
+  role: string;
+  /** Descripción para Google y la vista previa al compartir. */
+  description: string;
   /** Titular del hero del inicio. Cada elemento es una línea en pantallas anchas. */
   heroTitle: string[];
   /** Tira de disciplinas sobre el titular del hero. */
@@ -26,6 +32,9 @@ interface SiteConfig {
 
 export const sites: Record<SiteId, SiteConfig> = {
   ux: {
+    url: 'https://www.leylavargas.com',
+    role: 'UX/UI Designer',
+    description: 'UX/UI design portfolio: research, design systems and human-centered interfaces.',
     heroTitle: ['Product designer with a', 'background in brand identity'],
     disciplines: ['Product Design', 'UX/UI', 'Visual Systems'],
     about: {
@@ -39,6 +48,10 @@ export const sites: Record<SiteId, SiteConfig> = {
     footerLinks: [],
   },
   brand: {
+    url: 'https://www.leylavargas.net',
+    role: 'Senior Designer',
+    description:
+      'Senior designer turning complex ideas into visual systems. Designer first, illustrator by training.',
     heroTitle: [
       'Senior designer turning complex ideas into visual systems. Designer first, illustrator by training.',
     ],
