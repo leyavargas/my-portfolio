@@ -75,8 +75,10 @@ const tags = role.split(',').map((tag) => tag.trim()).filter(Boolean);
     margin: 0;
   }
   .year {
+    flex: none; /* el rango de años no se parte en dos líneas; el título se acomoda */
     color: var(--muted);
     font-size: 0.9rem;
+    white-space: nowrap;
   }
   p {
     color: var(--muted);

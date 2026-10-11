@@ -49,24 +49,6 @@ const projects = await getProjects();
 </BaseLayout>
 
 <script>
-  // Ajusta la tira de disciplinas al ancho real de la primera línea del titular.
-  const title = document.querySelector<HTMLElement>('.liquid-hero h1');
-  const strip = document.querySelector<HTMLElement>('.disciplines');
-  if (title && strip) {
-    const fit = () => {
-      const range = document.createRange();
-      range.selectNodeContents(title);
-      const rects = [...range.getClientRects()].filter((r) => r.width > 0);
-      if (!rects.length) return;
-      const firstTop = Math.min(...rects.map((r) => r.top));
-      const line = rects.filter((r) => Math.abs(r.top - firstTop) < 2);
-      const width = Math.max(...line.map((r) => r.right)) - Math.min(...line.map((r) => r.left));
-      strip.style.setProperty('--strip-width', `${Math.round(width)}px`);
-    };
-    document.fonts.ready.then(fit);
-    new ResizeObserver(fit).observe(title);
-  }
-
   // Ease suave para la hoja blanca (#work) que sube sobre el hero.
   // El scroll nativo es lineal; aquí la hoja sigue una curva ease-in-out mezclada a medias
   // con el movimiento lineal (EASE_AMOUNT), y el desplazamiento se interpola cuadro a cuadro
@@ -112,23 +94,35 @@ const projects = await getProjects();
        Se achica en pantallas angostas para que todo quepa. */
     --hero-gap: max(3rem, min(17svh, 23vw, 11rem));
   }
-  /* Tira de disciplinas: una a la izquierda, una al centro y una a la derecha. */
+  /* Tira de disciplinas: centrada y separada por puntos pequeños. */
   .hero-copy {
     width: fit-content;
     max-width: 100%;
     margin-inline: auto;
   }
   .disciplines {
-    width: var(--strip-width, 100%);
     display: flex;
-    justify-content: space-between;
-    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     list-style: none;
     margin: 0 auto var(--hero-gap);
     padding: 0;
     font-size: clamp(0.75rem, 1.2vw, 0.9rem);
     font-weight: 400;
     color: rgb(255 255 255 / 0.7);
+  }
+  .disciplines li {
+    display: flex;
+    align-items: center;
+  }
+  .disciplines li + li::before {
+    content: '';
+    width: 0.22em;
+    height: 0.22em;
+    margin-inline: 0.65em;
+    border-radius: 50%;
+    background: currentColor;
   }
   h1 {
     font-size: clamp(2.25rem, 5.5vw, 4.5rem);

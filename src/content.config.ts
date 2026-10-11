@@ -23,6 +23,8 @@ const projects = defineCollection({
       // Resultados clave que se muestran en la sección Impact del overview.
       impact: z.array(z.string()).default([]),
       cover: image().optional(),
+      // Versión vertical opcional del hero para pantallas verticales (celular).
+      coverMobile: image().optional(),
       accent: z.string().default('#e8e4dc'),
       featured: z.boolean().default(false),
       order: z.number().default(99),

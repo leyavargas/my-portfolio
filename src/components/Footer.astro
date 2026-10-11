@@ -1,7 +1,11 @@
 ---
 import { site } from '../data/site';
-import { currentSite } from '../data/sites';
-const year = new Date().getFullYear();
+import { currentSite, currentSiteId } from '../data/sites';
+
+// Tira con el nombre que se desliza al final del pie. El separador son los pétalos del favicon del sitio.
+const markUrl = `url(/favicons/${currentSiteId}/mark.png)`; // solo los pétalos del favicon
+const marqueeGroups = [0, 1]; // dos grupos iguales: la animación se mueve uno y vuelve a empezar sin salto
+const namesPerGroup = [0, 1];
 
 // Enlaces del pie: Home + redes. Los externos abren en otra pestaña.
 const links = [
@@ -30,8 +34,21 @@ const links = [
         }
       </ul>
     </div>
-    <div class="bottom">
-      <span>© {year} {site.name}</span>
+  </div>
+  <div class="marquee" aria-hidden="true" style={`--mark: ${markUrl}`}>
+    <div class="track">
+      {
+        marqueeGroups.map(() => (
+          <div class="group">
+            {namesPerGroup.map(() => (
+              <>
+                <span class="name">{site.name}</span>
+                <span class="mark" />
+              </>
+            ))}
+          </div>
+        ))
+      }
     </div>
   </div>
 </footer>
@@ -68,14 +85,53 @@ const links = [
     text-decoration: underline;
     text-underline-offset: 0.2em;
   }
-  .bottom {
+  /* Tira con el nombre (como la referencia, a la mitad de su altura), de borde a borde.
+     Reemplaza el espacio inferior del pie: el bloque de arriba conserva el mismo aire debajo. */
+  footer {
+    padding-bottom: 0;
+  }
+  .marquee {
+    margin-top: var(--footer-pad);
+    overflow: hidden;
+    color: #1c1c1c;
+    font-size: clamp(3.5rem, 8.25vw, 10rem);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    user-select: none;
+  }
+  .track {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: space-between;
-    margin-top: 4rem;
-    color: rgb(255 255 255 / 0.6);
-    font-size: 0.9rem;
+    width: max-content;
+    animation: marquee 40s linear infinite;
+  }
+  .group {
+    display: flex;
+    align-items: center;
+    padding-bottom: 0.24em; /* aire debajo del nombre, como en la referencia */
+  }
+  .name {
+    padding-inline: 0.3em;
+  }
+  .mark {
+    flex: none;
+    width: 1em;
+    height: 1em;
+    margin-inline: 0.2em;
+    background: currentColor;
+    -webkit-mask: var(--mark) center / contain no-repeat;
+    mask: var(--mark) center / contain no-repeat;
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .track {
+      animation: none;
+    }
   }
   /* Enlaces en columna, uno debajo del otro, en blanco.
      El margen alinea la parte de arriba de las mayúsculas de "Home" con la del título

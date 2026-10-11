@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getProjects } from '../../lib/projects';
@@ -16,7 +16,13 @@ export async function getStaticPaths() {
 }
 
 const { project, others } = Astro.props;
-const { title, summary, client, role, collaboration, year, cover, accent, impact } = project.data;
+const { title, summary, client, role, collaboration, year, cover, coverMobile, accent, impact } = project.data;
+
+// En pantallas verticales (celular) se usa la versión vertical del hero, si el proyecto la tiene.
+const HERO_MOBILE_MEDIA = '(max-aspect-ratio: 3/4)';
+const heroMobile = coverMobile
+  ? await getImage({ src: coverMobile, widths: [750, 1125, 1500], quality: 92 })
+  : undefined;
 
 const { Content } = await render(project);
 
@@ -34,15 +40,18 @@ const facts = [
     <div class="hero" style={`background: ${accent}`}>
       {
         cover && (
-          <Image
-            src={cover}
-            alt=""
-            widths={[1280, 1920, 2560, 3840]}
-            sizes="100vw"
-            quality={92}
-            loading="eager"
-            fetchpriority="high"
-          />
+          <picture>
+            {heroMobile && <source media={HERO_MOBILE_MEDIA} srcset={heroMobile.srcSet.attribute} sizes="100vw" />}
+            <Image
+              src={cover}
+              alt=""
+              widths={[1280, 1920, 2560, 3840]}
+              sizes="100vw"
+              quality={92}
+              loading="eager"
+              fetchpriority="high"
+            />
+          </picture>
         )
       }
       <div class="scroll-hint">
@@ -113,6 +122,9 @@ const facts = [
     height: 100svh;
     min-height: 28rem;
     overflow: hidden;
+  }
+  .hero picture {
+    display: contents;
   }
   .hero img {
     width: 100%;
@@ -373,6 +385,10 @@ const facts = [
   }
   .prose :global(li + li) {
     margin-top: 0.4em;
+  }
+  /* Números de las listas numeradas en negrita, igual que el texto en negrita que los sigue. */
+  .prose :global(ol > li::marker) {
+    font-weight: 600;
   }
   .prose :global(strong) {
     font-weight: 600;
