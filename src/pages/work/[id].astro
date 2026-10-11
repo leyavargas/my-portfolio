@@ -402,6 +402,18 @@ const facts = [
   .prose > :global(:is(img, video, .image-row, .image-carousel) + script + :is(img, video, .image-row, .image-carousel)) {
     margin-top: var(--media-gap);
   }
+  /* En celular, el titular (h2) queda con el mismo espacio visual arriba y abajo
+     (~50px de texto a texto), venga después de un párrafo, una lista o una imagen. */
+  @media (max-width: 48rem) {
+    .prose :global(h2) {
+      margin-bottom: var(--block-gap);
+    }
+    .prose > :global(:is(img, video, .image-row, .image-carousel) + h2),
+    .prose > :global(:is(img, video, .image-row, .image-carousel) + script + h2),
+    .prose > :global(:is(ul, ol) + h2) {
+      margin-top: calc(var(--block-gap) + 5px);
+    }
+  }
   /* Fila de tres imágenes (p. ej. bici · grupo · moto). */
   .prose :global(.image-row) {
     display: grid;

@@ -6,12 +6,13 @@ excerpt: "A tea brand built around the idea of a daily oasis."
 client: Sacred Waters
 role: Creative Direction, Naming, Brand Identity, Packaging
 year: 2024
-cover: ./sacred-waters/00-header-v2.jpg
+cover: ./sacred-waters/00-header-v3.jpg
 accent: '#e5c596'
 order: 4
 ---
 
 import CaseImage from '../../components/CaseImage.astro';
+import ImageCarousel from '../../components/ImageCarousel.astro';
 import logoWindow from './sacred-waters/01-logo-window.jpg';
 import billboard from './sacred-waters/02-billboard.jpg';
 import visualLanguage from './sacred-waters/03-visual-language.jpg';
@@ -57,9 +58,13 @@ Fragment gives the identity its character, while Object Sans keeps functional in
 
 Each of the six varieties has its own color, tied to its flavor or ingredient. The challenge was making these colors work well together while staying true to the creative direction. Cardboard boxes with individual sachets make the tea easy to carry and enjoy anywhere.
 
-<CaseImage src={teaBoxes} alt="Black tea, Green tea, and Earl Grey boxes side by side" />
-
-<CaseImage src={infusionBoxes} alt="Chamomile, Lavender, and Mint herbal infusion boxes side by side" />
+<ImageCarousel
+  label="Sacred Waters tea and herbal infusion boxes"
+  images={[
+    { src: teaBoxes, alt: 'Black tea, Green tea, and Earl Grey boxes side by side' },
+    { src: infusionBoxes, alt: 'Chamomile, Lavender, and Mint herbal infusion boxes side by side' },
+  ]}
+/>
 
 <CaseImage src={earlGrey} alt="Earl Grey box standing on a rock in warm evening light" />
 
