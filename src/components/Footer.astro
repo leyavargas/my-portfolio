@@ -128,6 +128,14 @@ const links = [
       transform: translateX(-50%);
     }
   }
+  /* Celular: menos negro antes de "Let's work together" y la tira separada del borde inferior
+     (más el área segura del iPhone). */
+  @media (max-width: 48rem) {
+    footer {
+      --footer-pad: 4.5rem;
+      padding-bottom: calc(1.75rem + env(safe-area-inset-bottom, 0px));
+    }
+  }
   @media (prefers-reduced-motion: reduce) {
     .track {
       animation: none;
