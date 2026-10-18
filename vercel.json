@@ -4,5 +4,9 @@
       "source": "/(.*)",
       "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noimageindex" }]
     }
+  ],
+  "redirects": [
+    { "source": "/work/didi-information-design", "destination": "/work/information-design/", "permanent": true },
+    { "source": "/work/didi-information-design/", "destination": "/work/information-design/", "permanent": true }
   ]
 }
