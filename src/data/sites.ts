@@ -50,14 +50,11 @@ export const sites: Record<SiteId, SiteConfig> = {
   brand: {
     url: 'https://www.leylavargas.net',
     role: 'Senior Designer',
-    description:
-      'Senior designer turning complex ideas into visual systems. Designer first, illustrator by training.',
-    heroTitle: [
-      'Senior designer turning complex ideas into visual systems. Designer first, illustrator by training.',
-    ],
-    disciplines: ['Art Direction', 'Illustration', 'Visual Systems'],
-    // 85% del tamaño normal: la frase queda en 3 líneas en laptops y monitores.
+    description: 'Senior designer turning complex ideas into visual systems.',
+    heroTitle: ['Senior designer turning complex', 'ideas into visual systems.'],
+    // 85% del tamaño normal: así la primera línea cabe completa en laptops y monitores.
     heroTitleScale: 0.85,
+    disciplines: ['Art Direction', 'Illustration', 'Visual Systems'],
     about: {
       title: 'Hello, hello!',
       paragraphs: [
