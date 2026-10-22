@@ -23,6 +23,16 @@ const pendingStyle = 'padding: 1rem 1.25rem; border: 2px dashed #e0a100; backgro
 </BaseLayout>
 
 <style>
+  /* En escritorio, el contenido llena la pantalla debajo del header (~4.7rem) y queda centrado
+     verticalmente: el footer no se asoma al cargar. */
+  @media (min-width: 48rem) {
+    :global(main:has(.about)) {
+      min-height: calc(100svh - 4.5rem);
+      padding-bottom: 0;
+      display: grid;
+      align-content: center;
+    }
+  }
   .about {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);

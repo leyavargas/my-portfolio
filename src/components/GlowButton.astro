@@ -6,14 +6,23 @@ interface Props {
   label: string;
   /** Muestra la flecha que baja (↴) después del texto. */
   arrowDown?: boolean;
+  /** Muestra la flecha hacia atrás (←) antes del texto. */
+  arrowBack?: boolean;
   class?: string;
 }
 
-const { href, label, arrowDown = false, class: className } = Astro.props;
+const { href, label, arrowDown = false, arrowBack = false, class: className } = Astro.props;
 const chars = [...label];
 ---
 
 <a class:list={['glow-button', className]} href={href} aria-label={label} style={`--count: ${chars.length}`}>
+  {
+    arrowBack && (
+      <svg class="icon icon-back" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M13 8H3M7 4 3 8l4 4" />
+      </svg>
+    )
+  }
   <span class="label" aria-hidden="true">
     {
       chars.map((char, i) => (
@@ -98,6 +107,30 @@ const chars = [...label];
     margin-left: 0.6em;
     flex: none;
   }
+  /* La flecha hacia atrás va antes del texto: sale hacia la izquierda y vuelve desde la derecha. */
+  .icon-back {
+    margin-left: 0;
+    margin-right: 0.6em;
+  }
+  .glow-button:hover .icon.icon-back,
+  .glow-button:focus-visible .icon.icon-back {
+    animation-name: icon-slide;
+    animation-delay: 0ms;
+  }
+  @keyframes icon-slide {
+    45% {
+      transform: translateX(-110%);
+      opacity: 0;
+    }
+    46% {
+      transform: translateX(110%);
+      opacity: 0;
+    }
+    100% {
+      transform: none;
+      opacity: 1;
+    }
+  }
   .glow-button:hover .icon,
   .glow-button:focus-visible .icon {
     animation: icon-drop 0.5s cubic-bezier(0.6, 0, 0.2, 1) both;
@@ -154,7 +187,8 @@ const chars = [...label];
   @media (prefers-reduced-motion: reduce) {
     .glow-button::before,
     .glow-button:hover .char,
-    .glow-button:hover .icon {
+    .glow-button:hover .icon,
+    .glow-button:hover .icon.icon-back {
       animation: none;
     }
   }
