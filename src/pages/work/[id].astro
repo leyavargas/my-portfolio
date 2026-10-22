@@ -16,7 +16,7 @@ export async function getStaticPaths() {
 }
 
 const { project, others } = Astro.props;
-const { title, summary, client, role, collaboration, year, cover, coverMobile, accent, impact } = project.data;
+const { title, summary, client, role, collaboration, year, cover, coverMobile, coverVideo, coverVideoMobile, accent, impact } = project.data;
 
 // En pantallas verticales (celular) se usa la versión vertical del hero, si el proyecto la tiene.
 const HERO_MOBILE_MEDIA = '(max-aspect-ratio: 3/4)';
@@ -24,7 +24,14 @@ const heroMobile = coverMobile
   ? await getImage({ src: coverMobile, widths: [750, 1125, 1500], quality: 92 })
   : undefined;
 
+// Portada del video del hero (se ve mientras carga, o fija si la persona prefiere menos movimiento).
+const heroVideoPoster = coverVideo && cover ? await getImage({ src: cover, width: 1920, format: 'webp', quality: 85 }) : undefined;
+
 const { Content } = await render(project);
+
+// El resumen puede tener varios párrafos, separados por una línea en blanco.
+const summaryParagraphs = summary.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+const description = summaryParagraphs.join(' ');
 
 const facts = [
   // "Clients" en plural cuando hay más de uno (p. ej. "eBay, Dentons & DiDi").
@@ -35,11 +42,27 @@ const facts = [
 ].filter((f) => f.value);
 ---
 
-<BaseLayout title={title} description={summary} shareImage={cover} hideHeader background="#fff">
+<BaseLayout title={title} description={description} shareImage={cover} hideHeader background="#fff">
   <article>
     <div class="hero" style={`background: ${accent}`}>
       {
-        cover && (
+        coverVideo ? (
+          <video
+            class="hero-video"
+            data-hero-video
+            data-poster-mobile={coverVideoMobile ? heroMobile?.src : undefined}
+            poster={heroVideoPoster?.src}
+            muted
+            loop
+            playsinline
+            autoplay
+            preload="auto"
+            aria-hidden="true"
+          >
+            {coverVideoMobile && <source src={coverVideoMobile} media={HERO_MOBILE_MEDIA} type="video/mp4" />}
+            <source src={coverVideo} type="video/mp4" />
+          </video>
+        ) : cover && (
           <picture>
             {heroMobile && <source media={HERO_MOBILE_MEDIA} srcset={heroMobile.srcSet.attribute} sizes="100vw" />}
             <Image
@@ -85,7 +108,9 @@ const facts = [
                 ))
               }
             </dl>
-            <p class="summary">{summary}</p>
+            <div class="summary">
+              {summaryParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
           </div>
           {
             impact.length > 0 && (
@@ -126,7 +151,9 @@ const facts = [
   .hero picture {
     display: contents;
   }
-  .hero img {
+  .hero img,
+  .hero video {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -320,7 +347,12 @@ const facts = [
     font-size: 1.3rem;
     font-weight: 300;
     line-height: 1.55;
+  }
+  .summary p {
     margin: 0;
+  }
+  .summary p + p {
+    margin-top: 1em;
   }
 
   .impact {
@@ -407,15 +439,15 @@ const facts = [
        el mismo arriba y abajo de cada bloque de texto, para que quede centrado. */
     --block-gap: clamp(3rem, 5.5vw, 4.4rem);
   }
-  .prose > :global(:is(img, video, .image-row, .image-carousel)) {
+  .prose > :global(:is(img, video, .image-row, .image-carousel, .motion-video)) {
     margin-block: var(--block-gap);
   }
   /* (Astro inserta un <script> después de algunos componentes, como el carrusel: se ignora.) */
-  .prose > :global(:is(img, video, .image-row, .image-carousel):has(+ :is(img, video, .image-row, .image-carousel), + script + :is(img, video, .image-row, .image-carousel))) {
+  .prose > :global(:is(img, video, .image-row, .image-carousel, .motion-video):has(+ :is(img, video, .image-row, .image-carousel, .motion-video), + script + :is(img, video, .image-row, .image-carousel, .motion-video))) {
     margin-bottom: 0;
   }
-  .prose > :global(:is(img, video, .image-row, .image-carousel) + :is(img, video, .image-row, .image-carousel)),
-  .prose > :global(:is(img, video, .image-row, .image-carousel) + script + :is(img, video, .image-row, .image-carousel)) {
+  .prose > :global(:is(img, video, .image-row, .image-carousel, .motion-video) + :is(img, video, .image-row, .image-carousel, .motion-video)),
+  .prose > :global(:is(img, video, .image-row, .image-carousel, .motion-video) + script + :is(img, video, .image-row, .image-carousel, .motion-video)) {
     margin-top: var(--media-gap);
   }
   /* En celular, el titular (h2) queda con el mismo espacio visual arriba y abajo
@@ -424,8 +456,8 @@ const facts = [
     .prose :global(h2) {
       margin-bottom: var(--block-gap);
     }
-    .prose > :global(:is(img, video, .image-row, .image-carousel) + h2),
-    .prose > :global(:is(img, video, .image-row, .image-carousel) + script + h2),
+    .prose > :global(:is(img, video, .image-row, .image-carousel, .motion-video) + h2),
+    .prose > :global(:is(img, video, .image-row, .image-carousel, .motion-video) + script + h2),
     .prose > :global(:is(ul, ol) + h2) {
       margin-top: calc(var(--block-gap) + 5px);
     }
@@ -498,3 +530,17 @@ const facts = [
     font-size: 1.35rem;
   }
 </style>
+
+<script>
+  // Si la persona prefiere menos movimiento, el video del hero queda en pausa (se ve la portada).
+  const heroVideo = document.querySelector<HTMLVideoElement>('[data-hero-video]');
+  // En pantallas verticales, la portada también es la vertical.
+  const mobilePoster = heroVideo?.dataset.posterMobile;
+  if (heroVideo && mobilePoster && window.matchMedia('(max-aspect-ratio: 3/4)').matches) {
+    heroVideo.poster = mobilePoster;
+  }
+  if (heroVideo && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    heroVideo.removeAttribute('autoplay');
+    heroVideo.pause();
+  }
+</script>

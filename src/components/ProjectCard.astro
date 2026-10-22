@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -7,7 +7,9 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const { title, summary, excerpt, role, cover, accent, year } = project.data;
+const { title, summary, excerpt, role, cover, coverVideo, accent, year } = project.data;
+// Si el proyecto tiene video de hero, la tarjeta también se mueve (con la portada mientras carga).
+const videoPoster = coverVideo && cover ? await getImage({ src: cover, width: 1200, format: 'webp', quality: 85 }) : undefined;
 // Las etiquetas son las mismas del campo Role del overview.
 const tags = role.split(',').map((tag) => tag.trim()).filter(Boolean);
 ---
@@ -16,7 +18,9 @@ const tags = role.split(',').map((tag) => tag.trim()).filter(Boolean);
   <a href={`/work/${project.id}/`}>
     <div class="cover" style={`--card-accent: ${accent}`}>
       {
-        cover ? (
+        coverVideo ? (
+          <video data-card-video src={coverVideo} poster={videoPoster?.src} muted loop playsinline autoplay preload="auto" aria-hidden="true" />
+        ) : cover ? (
           <Image src={cover} alt="" widths={[480, 800, 1200]} sizes="(min-width: 768px) 50vw, 100vw" />
         ) : (
           <span class="placeholder" aria-hidden="true">{title}</span>
@@ -34,6 +38,17 @@ const tags = role.split(',').map((tag) => tag.trim()).filter(Boolean);
   </a>
 </article>
 
+<script>
+  // Los videos de las tarjetas se reproducen solos, en loop. Solo quedan quietos
+  // si la persona prefiere menos movimiento.
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll<HTMLVideoElement>('[data-card-video]').forEach((video) => {
+      video.removeAttribute('autoplay');
+      video.pause();
+    });
+  }
+</script>
+
 <style>
   a {
     text-decoration: none;
@@ -47,13 +62,15 @@ const tags = role.split(',').map((tag) => tag.trim()).filter(Boolean);
     display: grid;
     place-items: center;
   }
-  .cover img {
+  .cover img,
+  .cover video {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
   }
-  a:hover .cover img {
+  a:hover .cover img,
+  a:hover .cover video {
     transform: scale(1.03);
   }
   .placeholder {

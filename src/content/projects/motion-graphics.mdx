@@ -1,0 +1,64 @@
+---
+title: Motion Graphics
+sites: ["brand"]
+summary: |
+  A collection of motion graphics projects for clients like DiDi and Kölbi, alongside personal work, including social media content and animated ads for different audiences and markets.
+
+  Created using After Effects and frame-by-frame animation in Photoshop. I handled everything from visual design, layouts, and illustrations to motion planning, transitions, and final animation.
+excerpt: "Animated ads for DiDi and Kölbi, alongside personal frame-by-frame animation."
+client: DiDi, Kölbi, Personal Work
+role: Motion Design, Illustration, Graphic Design
+year: 2018–2023
+cover: ./motion-graphics/00-header.jpg
+coverMobile: ./motion-graphics/00-header-mobile.jpg
+coverVideo: /videos/motion-graphics-hero.mp4
+coverVideoMobile: /videos/motion-graphics-hero-mobile.mp4
+accent: '#e8908a'
+order: 5
+---
+
+import MotionVideo from '../../components/MotionVideo.astro';
+import CaseVideo from '../../components/CaseVideo.astro';
+import didiPanama from './motion-graphics/01-didi-panama.mp4';
+import didiPanamaPoster from './motion-graphics/01-didi-panama-poster.jpg';
+import didiEconomy from './motion-graphics/02-didi-economy.mp4';
+import didiEconomyPoster from './motion-graphics/02-didi-economy-poster.jpg';
+import didiSolicitaViaje from './motion-graphics/03-didi-solicita-viaje.mp4';
+import didiSolicitaViajePoster from './motion-graphics/03-didi-solicita-viaje-poster.jpg';
+import kolbi from './motion-graphics/04-kolbi.gif';
+import kenaMe from './motion-graphics/05-kena-me.mp4';
+import kenaMePoster from './motion-graphics/05-kena-me-poster.jpg';
+import mouth from './motion-graphics/06-mouth.mp4';
+import mouthPoster from './motion-graphics/06-mouth-poster.jpg';
+import tomandoSol from './motion-graphics/07-tomando-sol.mp4';
+import tomandoSolPoster from './motion-graphics/07-tomando-sol-poster.jpg';
+
+## DiDi Ads
+
+A selection of ads targeting passengers in Panama, Costa Rica, and the Dominican Republic. These ads were displayed across Google and Facebook.
+
+<MotionVideo src={didiPanama} poster={didiPanamaPoster} audio bordered label="DiDi ad for Panama: an illustrated car drives past trees and a cloud of dust, announcing up to 50% off the first two rides" />
+
+<div class="image-row image-row--2">
+  <MotionVideo src={didiEconomy} poster={didiEconomyPoster} audio bordered label="DiDi Economy ad for Costa Rica: an illustrated car with a discount pin, announcing more affordable fares" />
+  <MotionVideo src={didiSolicitaViaje} poster={didiSolicitaViajePoster} audio bordered label="DiDi retargeting ad for Costa Rica: an illustrated finger taps the DiDi app and a car appears, with the text request your ride now" />
+</div>
+
+## Kölbi
+
+Kölbi is Costa Rica’s leading telecommunications brand. This animation was created as part of its 2018 Mother’s Day advertising campaign.
+
+<p class="note">Art direction: Susana Salas</p>
+
+<img src={kolbi.src} width={kolbi.width} height={kolbi.height} alt="Kölbi ad: a pineapple wearing sunglasses on the sand, promoting a TV and internet bundle" loading="lazy" />
+
+## Personal Work
+
+A selection of personal illustrations brought to life through frame-by-frame animation.
+
+<MotionVideo src={kenaMe} poster={kenaMePoster} ambient label="Line animation of two hands reaching toward each other that transform into a river, a map, and a globe" caption="Animation proposal for “Kena Me,” a song about migration by Emmanuel Pi Djob and J. C. Agou." />
+
+<div class="image-row image-row--2">
+  <CaseVideo src={mouth} poster={mouthPoster} label="Frame-by-frame animation of red lips changing expression, from a kiss to a gold-toothed smile" />
+  <CaseVideo src={tomandoSol} poster={tomandoSolPoster} label="Painterly frame-by-frame animation of a man sunbathing on a towel in the grass, with shifting brushstrokes" />
+</div>

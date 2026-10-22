@@ -25,6 +25,11 @@ const projects = defineCollection({
       cover: image().optional(),
       // Versión vertical opcional del hero para pantallas verticales (celular).
       coverMobile: image().optional(),
+      // Video opcional para el hero (ruta dentro de /public, p. ej. "/videos/x.mp4").
+      // Se reproduce solo, en loop y sin sonido; `cover` se usa como portada mientras carga.
+      coverVideo: z.string().optional(),
+      // Versión vertical del video del hero para celular (usa `coverMobile` como portada).
+      coverVideoMobile: z.string().optional(),
       accent: z.string().default('#e8e4dc'),
       featured: z.boolean().default(false),
       order: z.number().default(99),
