@@ -50,18 +50,17 @@ const facts = [
           <video
             class="hero-video"
             data-hero-video
+            data-src={coverVideo}
+            data-src-mobile={coverVideoMobile}
+            data-poster={heroVideoPoster?.src}
             data-poster-mobile={coverVideoMobile ? heroMobile?.src : undefined}
             poster={heroVideoPoster?.src}
             muted
             loop
             playsinline
-            autoplay
             preload="auto"
             aria-hidden="true"
-          >
-            {coverVideoMobile && <source src={coverVideoMobile} media={HERO_MOBILE_MEDIA} type="video/mp4" />}
-            <source src={coverVideo} type="video/mp4" />
-          </video>
+          />
         ) : cover && (
           <picture>
             {heroMobile && <source media={HERO_MOBILE_MEDIA} srcset={heroMobile.srcSet.attribute} sizes="100vw" />}
@@ -411,16 +410,29 @@ const facts = [
   }
 </style>
 
-<script>
-  // Si la persona prefiere menos movimiento, el video del hero queda en pausa (se ve la portada).
-  const heroVideo = document.querySelector<HTMLVideoElement>('[data-hero-video]');
-  // En pantallas verticales, la portada también es la vertical.
-  const mobilePoster = heroVideo?.dataset.posterMobile;
-  if (heroVideo && mobilePoster && window.matchMedia('(max-aspect-ratio: 3/4)').matches) {
-    heroVideo.poster = mobilePoster;
-  }
-  if (heroVideo && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    heroVideo.removeAttribute('autoplay');
-    heroVideo.pause();
-  }
+<script is:inline>
+  // Video del hero: se elige con JavaScript (no con <source media>) porque en iPhone el navegador
+  // a veces evalúa la pantalla antes de tiempo y cargaba la versión horizontal, que se veía con zoom.
+  // Si la orientación "se corrige" después (o se gira el teléfono), se cambia a la versión correcta.
+  (function () {
+    var video = document.querySelector('[data-hero-video]');
+    if (!video) return;
+    var vertical = window.matchMedia('(max-aspect-ratio: 3/4)');
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function apply() {
+      var mobile = vertical.matches && video.dataset.srcMobile;
+      var src = mobile ? video.dataset.srcMobile : video.dataset.src;
+      if (video.dataset.current === src) return;
+      video.dataset.current = src;
+      video.poster = (mobile && video.dataset.posterMobile) || video.dataset.poster || '';
+      video.muted = true;
+      video.src = src;
+      // Con "menos movimiento" se queda la portada fija.
+      if (!reduceMotion) video.play().catch(function () {});
+    }
+    apply();
+    if (vertical.addEventListener) vertical.addEventListener('change', apply);
+    window.addEventListener('resize', apply);
+    window.addEventListener('pageshow', apply);
+  })();
 </script>
