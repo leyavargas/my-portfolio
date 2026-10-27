@@ -41,7 +41,7 @@ export const sites: Record<SiteId, SiteConfig> = {
       title: 'Hello, hello!',
       paragraphs: [
         'I’m Leyla, senior designer with 10 years of experience in brand and visual design, now focused on digital product.',
-        'Around 2020, at DiDi, I started applying product thinking to brand work. As Senior Digital Designer, I led two interconnected design systems across eight Latin American markets, using methods like user surveys, heuristic evaluation, and iterative testing.',
+        'Around 2020, at DiDi, I started applying product thinking to brand work. As Senior Digital Communications Designer, I led two interconnected design systems across eight Latin American markets, using methods like user surveys, heuristic evaluation, and iterative testing.',
         'I’m drawn to complex problems that need both systematic thinking and clear visual direction, and I believe good design makes complexity easier to navigate.',
       ],
     },
