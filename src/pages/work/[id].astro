@@ -16,7 +16,7 @@ export async function getStaticPaths() {
 }
 
 const { project, others } = Astro.props;
-const { title, summary, client, role, collaboration, year, cover, coverMobile, coverVideo, coverVideoMobile, accent, impact } = project.data;
+const { title, summary, client, role, team, year, cover, coverMobile, coverVideo, coverVideoMobile, accent, impact } = project.data;
 
 // En pantallas verticales (celular) se usa la versión vertical del hero, si el proyecto la tiene.
 const HERO_MOBILE_MEDIA = '(max-aspect-ratio: 3/4)';
@@ -37,7 +37,7 @@ const facts = [
   // "Clients" en plural cuando hay más de uno (p. ej. "eBay, Dentons & DiDi").
   { label: client && /,|&/.test(client) ? 'Clients' : 'Client', value: client },
   { label: 'Role', value: role },
-  { label: 'Collaboration', value: collaboration },
+  { label: 'Team', value: team },
   { label: 'Year', value: year },
 ].filter((f) => f.value);
 ---

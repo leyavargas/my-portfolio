@@ -14,7 +14,7 @@ const projects = defineCollection({
       // Texto corto para la tarjeta del inicio; si falta, se usa `summary`.
       excerpt: z.string().optional(),
       client: z.string().optional(),
-      collaboration: z.string().optional(),
+      team: z.string().optional(),
       role: z.string(),
       // Un año (2024) o un rango ("2020-2022").
       year: z.union([z.number(), z.string()]),
