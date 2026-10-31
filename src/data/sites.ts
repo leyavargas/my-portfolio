@@ -64,7 +64,6 @@ export const sites: Record<SiteId, SiteConfig> = {
     },
     footerLinks: [
       { label: 'Behance', href: 'https://www.behance.net/leyvsz8659' },
-      { label: 'Instagram', href: 'https://www.instagram.com/meteorita_' },
     ],
   },
 };
