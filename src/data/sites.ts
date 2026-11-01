@@ -51,14 +51,14 @@ export const sites: Record<SiteId, SiteConfig> = {
     url: 'https://www.leylavargas.net',
     role: 'Senior Designer',
     description: 'Senior designer turning complex ideas into visual systems.',
-    heroTitle: ['Senior designer turning complex', 'ideas into visual systems.'],
+    heroTitle: ['Visual Design Lead turning complex', 'ideas into visual systems.'],
     // 85% del tamaño normal: así la primera línea cabe completa en laptops y monitores.
     heroTitleScale: 0.85,
     disciplines: ['Art Direction', 'Illustration', 'Visual Systems'],
     about: {
       title: 'Hello, hello!',
       paragraphs: [
-        'I’m Leyla, a senior designer who turns complex ideas into a single image or a complete visual system. With more than ten years of experience, I work between brand strategy and graphic design, taking projects from concept to execution across markets, channels, and contexts. I’m drawn to problems where visual design, systems thinking, and product meet.',
+        'I’m Leyla, a visual design lead who turns complex ideas into clear, scalable visual systems. With more than ten years of experience, I work across brand strategy, art direction, and graphic design, shaping visual concepts and guiding their execution across markets, channels, and contexts. I’m drawn to problems where visual design, systems thinking, and product meet.',
         'I consider myself a designer first. Illustration has been part of my work from the beginning, first as a practical tool born out of necessity, and later as a deeper practice, formalized with a postgraduate degree from EINA in Barcelona. For me, illustration isn’t decoration, but a way of solving problems that other tools can’t.',
       ],
     },
