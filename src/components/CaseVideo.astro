@@ -7,9 +7,11 @@ interface Props {
   src: string;
   poster: ImageMetadata;
   label: string;
+  /** Recorta el video a esta proporción (p. ej. "16 / 9") sin deformarlo. */
+  aspect?: string;
 }
 
-const { src, poster, label } = Astro.props;
+const { src, poster, label, aspect } = Astro.props;
 ---
 
 <video
@@ -24,6 +26,7 @@ const { src, poster, label } = Astro.props;
   playsinline
   preload="metadata"
   aria-label={label}
+  style={aspect ? `aspect-ratio: ${aspect}; object-fit: cover;` : undefined}
 ></video>
 
 <script>
