@@ -95,9 +95,13 @@ Built as a modular, vector-based system, the illustrations could quickly adapt t
 
 The inherited system lacked illustrations for recurring marketing needs such as discounts, safety features, and seasonal campaigns, as well as DiDi’s expanding services like motorcycle rides and food delivery. I designed the new library to support these evolving needs.
 
-<CaseImage src={needs} alt="Illustrations grouped by communication need: driver documents, promotions, passengers, unexpected situations, safety, COVID and brand presence" />
-
-<CaseImage src={seasonal} alt="Seasonal and regional illustrations: Peruvian traditional attire for a special launch, Peruvian currency, Halloween and Christmas" />
+<ImageCarousel
+  label="Illustrations by communication need and season"
+  images={[
+    { src: needs, alt: 'Illustrations grouped by communication need: driver documents, promotions, passengers, unexpected situations, safety, COVID and brand presence' },
+    { src: seasonal, alt: 'Seasonal and regional illustrations: Peruvian traditional attire for a special launch, Peruvian currency, Halloween and Christmas' },
+  ]}
+/>
 
 <div class="image-row">
   <CaseImage src={bike} alt="Animated illustration of a food delivery courier riding a bicycle" />
@@ -119,13 +123,13 @@ Designers could select and combine pre-built components from a centralized Illus
 
 ## 02 — Digital Communication Guidelines System
 
-A reusable framework for producing consistent communications across markets, channels, and audiences. Designed for both drivers and passengers (with drivers representing approximately 75–80% of communication needs) the system prioritized accessibility and scalability within existing software and licensing constraints.
+A reusable framework for producing consistent communications across markets, channels, and audiences. Designed for both drivers and passengers, the system prioritized accessibility and scalability.
 
 <CaseImage src={audiences} alt="Communication formats for the driver side, both audiences and the passenger side: Xpanel, pop up, email or landing page, ops card and ops card plus" />
 
 ### Design Decisions
 
-This wasn’t a rebrand; it extended DiDi’s existing identity into a scalable communication system. I identified recurring needs, such as tables, buttons, and icons, and turned them into reusable components and rules.
+Like the illustration system, the guidelines extended DiDi’s existing identity rather than replacing it. I identified recurring needs, such as tables, buttons, and icons, and turned them into reusable components and rules.
 
 <CaseImage src={decisions} alt="DiDi brand colors, Apira typeface weights, structure and sizing on a 750px grid, typographic hierarchy and text contrast ratio" />
 
