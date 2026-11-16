@@ -29,10 +29,10 @@ const heroVideoPoster = coverVideo && cover ? await getImage({ src: cover, width
 
 const { Content, headings } = await render(project);
 
-// Menú lateral con los títulos principales (h2). Solo en los casos largos (5 secciones o más);
-// en los casos cortos y visuales no aporta y compite con las imágenes.
+// Menú lateral con los títulos principales (h2), en todos los proyectos que tengan
+// más de una sección.
 const sections = headings.filter((h) => h.depth === 2);
-const showNav = sections.length >= 5;
+const showNav = sections.length >= 2;
 
 // El resumen puede tener varios párrafos, separados por una línea en blanco.
 const summaryParagraphs = summary.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
