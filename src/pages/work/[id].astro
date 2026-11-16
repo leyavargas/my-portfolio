@@ -27,7 +27,12 @@ const heroMobile = coverMobile
 // Portada del video del hero (se ve mientras carga, o fija si la persona prefiere menos movimiento).
 const heroVideoPoster = coverVideo && cover ? await getImage({ src: cover, width: 1920, format: 'webp', quality: 85 }) : undefined;
 
-const { Content } = await render(project);
+const { Content, headings } = await render(project);
+
+// Menú lateral con los títulos principales (h2). Solo en los casos largos (5 secciones o más);
+// en los casos cortos y visuales no aporta y compite con las imágenes.
+const sections = headings.filter((h) => h.depth === 2);
+const showNav = sections.length >= 5;
 
 // El resumen puede tener varios párrafos, separados por una línea en blanco.
 const summaryParagraphs = summary.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
@@ -118,8 +123,28 @@ const facts = [
       </header>
 
       <div class="body">
-        <div class="container prose">
-          <Content />
+        <div class:list={['case-layout', { 'has-nav': showNav }]}>
+          {
+            showNav && (
+              <div class="case-nav-track">
+                <nav class="case-nav" aria-label="Sections" data-case-nav>
+                  <ul>
+                    {sections.map(({ slug, text }) => (
+                      <li>
+                        <a href={`#${slug}`}>
+                          {/* Las palabras con guion (p. ej. "Trade-Offs") no se cortan en dos líneas. */}
+                          {text.split(/(\S+-\S+)/).map((part) => (/\S-\S/.test(part) ? <span class="nowrap">{part}</span> : part))}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              </div>
+            )
+          }
+          <div class="container prose">
+            <Content />
+          </div>
         </div>
 
         {others.length > 0 && <NextProjects projects={others} />}
@@ -259,6 +284,76 @@ const facts = [
     .impact ul {
       grid-template-columns: 1fr;
     }
+  }
+
+  /* Menú lateral de secciones: pegado al borde izquierdo de la pantalla, fuera del contenido,
+     que conserva sus márgenes. Solo aparece cuando el margen izquierdo tiene espacio para él. */
+  .case-layout {
+    position: relative;
+  }
+  .case-nav-track {
+    display: none;
+  }
+  @media (min-width: 90rem) {
+    .case-nav-track {
+      display: block;
+      position: absolute;
+      left: 1.25rem;
+      width: 9.5rem;
+      /* Recorre todo el contenido: empieza con el primer titular y termina con el último bloque. */
+      top: clamp(4rem, 8vw, 6rem);
+      bottom: var(--section-end);
+    }
+  }
+  .case-nav {
+    position: sticky;
+    top: 2.5rem;
+    max-height: calc(100vh - 5rem);
+    overflow-y: auto;
+  }
+  .case-nav ul {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .case-nav a {
+    display: block;
+    padding: 0.9rem 0 0.9rem 0.75rem; /* doble de espacio entre secciones */
+    font-size: 0.75rem; /* 12px */
+    line-height: 1.35;
+    font-weight: 300; /* mismo peso que el texto del caso (Space Grotesk Light) */
+    color: #767676; /* titulares inactivos: el gris más claro con contraste 4.5:1 sobre blanco (WCAG AA) */
+    text-decoration: none;
+    transition: color 0.45s var(--easy-ease), font-weight 0.45s var(--easy-ease);
+  }
+  .case-nav .nowrap {
+    white-space: nowrap;
+  }
+  .case-nav a:hover {
+    color: var(--muted);
+  }
+  .case-nav a[aria-current='true'] {
+    color: var(--text);
+    font-weight: 600;
+  }
+  /* Barra de la sección activa: se desliza entre titulares con "easy ease". */
+  .case-nav ul::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    height: var(--bar-h, 0);
+    border-radius: 2px;
+    background: var(--text);
+    transform: translateY(var(--bar-y, 0));
+    opacity: var(--bar-o, 0);
+    transition: transform 0.6s var(--easy-ease), height 0.6s var(--easy-ease), opacity 0.3s var(--easy-ease);
+  }
+  .case-layout {
+    /* "Easy ease" de After Effects. */
+    --easy-ease: cubic-bezier(0.33, 0, 0.67, 1);
   }
 
   /* Contenido del caso de estudio (Markdown/MDX). */
@@ -434,5 +529,92 @@ const facts = [
     if (vertical.addEventListener) vertical.addEventListener('change', apply);
     window.addEventListener('resize', apply);
     window.addEventListener('pageshow', apply);
+  })();
+</script>
+
+<script is:inline>
+  // Menú lateral: marca la sección visible y, al hacer clic, se desplaza con "easy ease".
+  (function () {
+    var nav = document.querySelector('[data-case-nav]');
+    if (!nav) return;
+    var list = nav.querySelector('ul');
+    var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
+    var targets = links.map(function (a) { return document.getElementById(decodeURIComponent(a.hash.slice(1))); });
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var current = -1;
+    var animating = false;
+
+    function setActive(i) {
+      if (i === current) return;
+      current = i;
+      links.forEach(function (a, j) { a.setAttribute('aria-current', j === i ? 'true' : 'false'); });
+      if (i < 0) { list.style.setProperty('--bar-o', '0'); return; }
+      // La barra mide solo lo que ocupa el texto (sin el espacio de arriba y abajo).
+      var a = links[i];
+      var cs = getComputedStyle(a);
+      var padTop = parseFloat(cs.paddingTop);
+      var padBottom = parseFloat(cs.paddingBottom);
+      list.style.setProperty('--bar-y', a.offsetTop + padTop + 'px');
+      list.style.setProperty('--bar-h', a.offsetHeight - padTop - padBottom + 'px');
+      list.style.setProperty('--bar-o', '1');
+    }
+
+    function update() {
+      if (animating) return;
+      var line = window.innerHeight * 0.35;
+      var active = -1;
+      targets.forEach(function (t, i) { if (t && t.getBoundingClientRect().top <= line) active = i; });
+      setActive(active);
+    }
+
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { ticking = false; update(); });
+    }, { passive: true });
+    window.addEventListener('resize', function () { current = -1; update(); });
+
+    // Curva "easy ease" (cubic-bezier 0.33, 0, 0.67, 1).
+    function easyEase(t) {
+      var lo = 0, hi = 1, x;
+      for (var k = 0; k < 20; k++) {
+        x = (lo + hi) / 2;
+        var bx = 3 * x * (1 - x) * (1 - x) * 0.33 + 3 * x * x * (1 - x) * 0.67 + x * x * x;
+        if (bx < t) lo = x; else hi = x;
+      }
+      x = (lo + hi) / 2;
+      return 3 * x * x * (1 - x) + x * x * x;
+    }
+
+    links.forEach(function (a, i) {
+      a.addEventListener('click', function (e) {
+        var t = targets[i];
+        if (!t) return;
+        e.preventDefault();
+        var start = window.scrollY;
+        var end = start + t.getBoundingClientRect().top - 32;
+        history.replaceState(null, '', a.hash);
+        setActive(i);
+        if (reduceMotion) { window.scrollTo(0, end); return; }
+        var distance = end - start;
+        var duration = Math.min(1400, Math.max(700, Math.abs(distance) * 0.35));
+        var html = document.documentElement;
+        var prev = html.style.scrollBehavior;
+        html.style.scrollBehavior = 'auto';
+        animating = true;
+        var t0 = null;
+        function step(now) {
+          if (t0 === null) t0 = now;
+          var p = Math.min(1, (now - t0) / duration);
+          window.scrollTo(0, start + distance * easyEase(p));
+          if (p < 1) requestAnimationFrame(step);
+          else { animating = false; html.style.scrollBehavior = prev; update(); }
+        }
+        requestAnimationFrame(step);
+      });
+    });
+
+    update();
   })();
 </script>
