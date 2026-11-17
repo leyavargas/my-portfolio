@@ -538,7 +538,7 @@ const facts = [
     var video = document.querySelector('[data-hero-video]');
     if (!video) return;
     var vertical = window.matchMedia('(max-aspect-ratio: 3/4)');
-    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // El hero está siempre en loop, también con "reducir movimiento" activado (decisión de diseño).
     function apply() {
       var mobile = vertical.matches && video.dataset.srcMobile;
       var src = mobile ? video.dataset.srcMobile : video.dataset.src;
@@ -547,13 +547,24 @@ const facts = [
       video.poster = (mobile && video.dataset.posterMobile) || video.dataset.poster || '';
       video.muted = true;
       video.src = src;
-      // Con "menos movimiento" se queda la portada fija.
-      if (!reduceMotion) video.play().catch(function () {});
+      video.play().catch(function () {});
+    }
+    // Si el video quedó pausado, se vuelve a reproducir. En iPhone pasa al volver a la página
+    // con "atrás" (Safari la restaura con el video detenido) o con el modo de ahorro de batería,
+    // que bloquea la reproducción automática hasta que la persona toca o desliza la pantalla.
+    function resume() {
+      if (!video.paused || document.hidden) return;
+      video.muted = true;
+      video.play().catch(function () {});
     }
     apply();
     if (vertical.addEventListener) vertical.addEventListener('change', apply);
     window.addEventListener('resize', apply);
-    window.addEventListener('pageshow', apply);
+    window.addEventListener('pageshow', function () { apply(); resume(); });
+    document.addEventListener('visibilitychange', resume);
+    ['touchstart', 'scroll', 'click'].forEach(function (type) {
+      window.addEventListener(type, resume, { passive: true });
+    });
   })();
 </script>
 
