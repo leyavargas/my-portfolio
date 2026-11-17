@@ -364,6 +364,13 @@ const facts = [
     font-weight: 300; /* Space Grotesk Light para el texto; los títulos y negritas mantienen su peso */
     line-height: 1.7;
   }
+  /* En celular: texto del cuerpo de 16px con interlineado de 24px. */
+  @media (max-width: 48rem) {
+    .prose {
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+  }
   .prose :global(p) {
     margin: 0 0 1.4em;
   }
@@ -380,9 +387,19 @@ const facts = [
   }
   /* Subtítulos de los casos de estudio (mismo estilo en todos los proyectos). */
   .prose :global(h3) {
-    font-size: calc(clamp(1.26rem, 2.25vw, 1.575rem) - 4px);
+    font-size: 1.375rem; /* 22px en escritorio; 18px en celular (abajo) */
     font-weight: 500;
     margin: 2em 0 0.8em;
+  }
+  /* En celular: titulares (h2) de 26px y subtítulos (h3) de 18px
+     (va después de las reglas generales para reemplazarlas). */
+  @media (max-width: 48rem) {
+    .prose :global(h2) {
+      font-size: 1.625rem;
+    }
+    .prose :global(h3) {
+      font-size: 1.125rem;
+    }
   }
   .prose :global(ol),
   .prose :global(ul) {
@@ -424,11 +441,11 @@ const facts = [
   .prose > :global(:is(img, video, .image-row, .image-carousel, .motion-video) + script + :is(img, video, .image-row, .image-carousel, .motion-video)) {
     margin-top: var(--media-gap);
   }
-  /* En celular, el titular (h2) queda con el mismo espacio visual arriba y abajo
-     (~50px de texto a texto), venga después de un párrafo, una lista o una imagen. */
+  /* En celular, el titular (h2) tiene ~50px arriba (venga después de un párrafo, una lista
+     o una imagen) y 24px abajo, para que se lea junto con su texto. */
   @media (max-width: 48rem) {
     .prose :global(h2) {
-      margin-bottom: var(--block-gap);
+      margin-bottom: 1.5rem; /* 24px: el titular queda más cerca de su texto que del bloque anterior */
     }
     .prose > :global(:is(img, video, .image-row, .image-carousel, .motion-video) + h2),
     .prose > :global(:is(img, video, .image-row, .image-carousel, .motion-video) + script + h2),
