@@ -47,10 +47,11 @@ const pendingStyle = 'padding: 1rem 1.25rem; border: 2px dashed #e0a100; backgro
     margin: 0;
     white-space: nowrap;
   }
+  /* Mismo texto que el cuerpo de los casos de estudio: 18px / 1.7 en escritorio, 16px / 24px en celular. */
   .text {
-    font-size: clamp(1.0625rem, 1.3vw, 1.125rem);
+    font-size: 1.125rem;
     font-weight: 300; /* Space Grotesk Light */
-    line-height: 1.75;
+    line-height: 1.7;
   }
   .text p {
     margin: 0;
@@ -66,6 +67,10 @@ const pendingStyle = 'padding: 1rem 1.25rem; border: 2px dashed #e0a100; backgro
     }
     h1 {
       white-space: normal;
+    }
+    .text {
+      font-size: 1rem;
+      line-height: 1.5;
     }
   }
 </style>
