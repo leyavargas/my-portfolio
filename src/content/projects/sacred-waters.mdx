@@ -6,32 +6,31 @@ excerpt: "A tea brand built around the idea of a daily oasis."
 client: Personal
 role: Creative Direction, Naming, Brand Identity, Packaging
 year: 2024
-cover: ./sacred-waters/00-header-v3.jpg
-coverMobile: ./sacred-waters/00-header-mobile.jpg
-accent: '#e5c596'
+cover: ./sacred-waters/00-header-v5.jpg
+coverMobile: ./sacred-waters/00-header-mobile-v3.jpg
+accent: '#032738'
 order: 4
 ---
 
 import CaseImage from '../../components/CaseImage.astro';
-import ImageCarousel from '../../components/ImageCarousel.astro';
 import logoWindow from './sacred-waters/01-logo-window.jpg';
 import billboard from './sacred-waters/02-billboard.jpg';
+import logoEmboss from './sacred-waters/01b-logo-emboss.jpg';
 import visualLanguage from './sacred-waters/03-visual-language.jpg';
 import moodboard from './sacred-waters/04-moodboard.jpg';
 import typeColor from './sacred-waters/05-typography-color.jpg';
-import teaBoxes from './sacred-waters/06-tea-boxes.jpg';
-import infusionBoxes from './sacred-waters/07-infusion-boxes.jpg';
-import earlGrey from './sacred-waters/08-earl-grey.jpg';
-import boxPattern from './sacred-waters/09-box-pattern.jpg';
-import boxGreenTea from './sacred-waters/10-box-green-tea.jpg';
+import lineup from './sacred-waters/06-packaging-lineup-v2.jpg';
+import dieline from './sacred-waters/07-dieline.jpg';
+import boxPattern from './sacred-waters/08-box-pattern.jpg';
+import greenTeaBox from './sacred-waters/09-green-tea-box.jpg';
 import outdoor from './sacred-waters/11-outdoor.jpg';
 import instagram from './sacred-waters/12-instagram.jpg';
 
 ## Creative Direction
 
-The creative direction began with the experience of drinking tea: a small moment of calm where everything feels right. This led to the idea of tea as something precious, even sacred, and ultimately to the name **Sacred Waters**.
+The creative direction began with the experience of drinking tea: a small moment of calm where everything feels right. This led to the idea of tea as something precious, even sacred, and ultimately to the name **Sacred Waters**. The idea of a daily oasis grew from there, in the desert, where water is truly precious.
 
-The idea of a daily oasis grew from there, set in the desert, where water is truly precious.
+The goal was to create a brand that felt premium yet accessible: special enough to feel like a treat, but still part of everyday life. That balance shaped both the design and the packaging decisions.
 
 ### Logo: The Fennec Fox
 
@@ -41,13 +40,17 @@ Rather than relying on familiar tea symbols, I chose the fennec fox as the brand
 
 <CaseImage src={billboard} alt="Billboard in a desert landscape with the Sacred Waters logo repeated across seven brand colors" />
 
+A simplified version of the emblem was created for packaging and digital applications, where it needs to read clearly at small sizes.
+
+<CaseImage src={logoEmboss} alt="Simplified fennec fox emblem embossed on blue and sand paper" />
+
 ### Visual Language
 
 The visual system is rooted in the desert, with botanical elements that tie it back to tea.
 
 <CaseImage src={visualLanguage} alt="Visual language: desert plants turned into graphic shapes, alongside botanical leaf and flower elements" />
 
-<CaseImage src={moodboard} alt="Brand moodboard grid with tea glasses, a vase, iced tea, a cup held up to the sky, and taglines such as An oasis of everyday life" />
+<CaseImage src={moodboard} alt="Brand grid with tea glasses on desert sand, the fennec fox logo, a vase over red mountains, a cup held up to the sky, lavender inside a vase silhouette, iced tea, and the taglines An oasis of everyday life and Sacred as water in the desert" />
 
 ### Typography & Color
 
@@ -57,21 +60,19 @@ Fragment gives the identity its character, while Object Sans keeps functional in
 
 ## Packaging
 
-Each of the six varieties has its own color, tied to its flavor or ingredient. The challenge was making these colors work well together while staying true to the creative direction. Cardboard boxes with individual sachets make the tea easy to carry and enjoy anywhere.
+Each of the six varieties has its own color, inspired by its flavor or key ingredient. The challenge was to bring these colors together into a cohesive palette while staying true to the creative direction.
 
-<ImageCarousel
-  label="Sacred Waters tea and herbal infusion boxes"
-  images={[
-    { src: teaBoxes, alt: 'Black tea, Green tea, and Earl Grey boxes side by side' },
-    { src: infusionBoxes, alt: 'Chamomile, Lavender, and Mint herbal infusion boxes side by side' },
-  ]}
-/>
+The collection is divided into two product lines that share the same packaging structure: blended teas feature a dark base, while herbal infusions use a light one, making them easy to tell apart at a glance.
 
-<CaseImage src={earlGrey} alt="Earl Grey box standing on a rock in warm evening light" />
+Other formats felt too exclusive for the brand, so I chose paper boxes with individual sachets. The sachets also make the tea easy to carry and enjoy anywhere, even outdoors.
+
+<CaseImage src={lineup} alt="Front panels of the six Sacred Waters boxes side by side: Earl Grey, Green tea, and Black tea on dark bases, and Mint, Chamomile, and Lavender on light bases, against a desert sky" />
+
+<CaseImage src={dieline} alt="Unfolded Earl Grey box dieline showing the brewing instructions, blue pattern, ingredients, front panel, and fennec fox emblem on the flaps" />
 
 <div class="image-row image-row--2">
-  <CaseImage src={boxPattern} alt="Side of an Earl Grey box with a blue pattern and ingredients, against a large stylized flower" />
-  <CaseImage src={boxGreenTea} alt="Green tea box seen from above, with a pink side panel showing the fennec fox emblem" />
+  <CaseImage src={boxPattern} alt="Earl Grey box tilted to show its blue pattern and ingredients panel, against a large stylized flower and desert dunes" />
+  <CaseImage src={greenTeaBox} alt="Green tea box centered on a dark green background extending its floral pattern" />
 </div>
 
 ## Extending the System
