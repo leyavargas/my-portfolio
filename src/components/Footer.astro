@@ -7,9 +7,10 @@ const markUrl = `url(/favicons/${currentSiteId}/mark.png)`; // solo los pétalos
 const marqueeGroups = [0, 1]; // dos grupos iguales: la animación se mueve uno y vuelve a empezar sin salto
 const namesPerGroup = [0, 1];
 
-// Enlaces del pie: Home + redes. Los externos abren en otra pestaña.
+// Enlaces del pie: Home, About + redes. Los externos abren en otra pestaña.
 const links = [
   { label: 'Home', href: '/', external: false },
+  { label: 'About', href: '/about/', external: false },
   ...[...site.social, ...currentSite.footerLinks].map((s) => ({ ...s, external: true })),
 ];
 ---
