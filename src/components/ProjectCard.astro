@@ -1,6 +1,7 @@
 ---
 import { Image, getImage } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
+import { projectSlug } from '../lib/projects';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -15,7 +16,7 @@ const tags = role.split(',').map((tag) => tag.trim()).filter(Boolean);
 ---
 
 <article class="card">
-  <a href={`/work/${project.id}/`}>
+  <a href={`/work/${projectSlug(project)}/`}>
     <div class="cover" style={`--card-accent: ${accent}`}>
       {
         coverVideo ? (

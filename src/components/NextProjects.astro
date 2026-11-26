@@ -4,6 +4,7 @@
 // Alineado al contenido a la izquierda y "a sangre" a la derecha; se arrastra con el mouse.
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
+import { projectSlug } from '../lib/projects';
 
 interface Props {
   projects: CollectionEntry<'projects'>[];
@@ -21,7 +22,7 @@ const { projects } = Astro.props;
       {
         projects.map(({ id, data }) => (
           <li class="slide">
-            <a href={`/work/${id}/`} class="card" style={`--card-accent: ${data.accent}`}>
+            <a href={`/work/${projectSlug({ id, data })}/`} class="card" style={`--card-accent: ${data.accent}`}>
               {data.cover && (
                 <Image src={data.cover} alt="" widths={[640, 960, 1400]} sizes="(min-width: 54rem) 33rem, 62vw" />
               )}

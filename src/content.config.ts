@@ -33,6 +33,10 @@ const projects = defineCollection({
       accent: z.string().default('#e8e4dc'),
       featured: z.boolean().default(false),
       order: z.number().default(99),
+      // Dirección opcional de la página (/work/<slug>/). Sirve para que una copia de un proyecto
+      // hecha para otro sitio (p. ej. transita-strategy.mdx) use la misma dirección que el original.
+      // (No se llama `slug` porque Astro usa ese nombre como identificador interno del proyecto.)
+      urlSlug: z.string().optional(),
       draft: z.boolean().default(false),
     }),
 });

@@ -1,8 +1,8 @@
-// Configuración por sitio. El mismo código construye dos sitios (UX y Brand);
-// la variable de entorno PUBLIC_SITE ("ux" o "brand") decide cuál se usa.
+// Configuración por sitio. El mismo código construye tres sitios (UX, Brand y Strategy);
+// la variable de entorno PUBLIC_SITE ("ux", "brand" o "strategy") decide cuál se usa.
 // Todo lo demás (estilos, componentes, diseño) es compartido.
 
-export const SITE_IDS = ['ux', 'brand'] as const;
+export const SITE_IDS = ['ux', 'brand', 'strategy'] as const;
 export type SiteId = (typeof SITE_IDS)[number];
 
 type Link = { label: string; href: string };
@@ -65,6 +65,24 @@ export const sites: Record<SiteId, SiteConfig> = {
     footerLinks: [
       { label: 'Behance', href: 'https://www.behance.net/leyvsz8659' },
     ],
+  },
+  strategy: {
+    // Todavía sin dominio propio: cambiar por la dirección definitiva cuando exista.
+    url: 'https://strategy-portfolio.vercel.app',
+    role: 'Design Strategist',
+    description: 'Design strategist turning complex problems into clear decisions.',
+    heroTitle: ['Design strategist turning complex', 'problems into clear decisions.'],
+    heroTitleScale: 0.85,
+    disciplines: ['Design Strategy', 'Research', 'Systems Thinking'],
+    about: {
+      title: 'Hello, hello!',
+      paragraphs: [
+        'I’m Leyla, a design strategist who turns complex problems into clear decisions, brands, and services. In more than ten years of brand and visual design, conceptualization has always been my strength: finding the idea at the center of a problem and defining how it should come to life.',
+        'At DiDi, I started applying product thinking to brand work. I led two interconnected design systems across eight Latin American markets and redesigned how our team received requests, cutting back-and-forth with stakeholders. Since then, I’ve added formal training in UX and research.',
+        'I’m drawn to challenges that need both systematic thinking and clear strategic direction.',
+      ],
+    },
+    footerLinks: [],
   },
 };
 

@@ -8,9 +8,11 @@
   "scripts": {
     "dev": "astro dev",
     "dev:brand": "PUBLIC_SITE=brand astro dev",
+    "dev:strategy": "PUBLIC_SITE=strategy astro dev",
     "build": "astro build",
     "build:ux": "PUBLIC_SITE=ux astro build",
     "build:brand": "PUBLIC_SITE=brand astro build",
+    "build:strategy": "PUBLIC_SITE=strategy astro build",
     "preview": "astro preview",
     "astro": "astro"
   },

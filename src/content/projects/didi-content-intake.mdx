@@ -1,0 +1,80 @@
+---
+title: DiDi Content Intake
+sites: ["strategy"]
+summary: "Requests to DiDi’s design team arrived in every possible format, often incomplete, and with text that didn’t fit the assets. I created a standard for how teams across eight Latin American markets submitted content: one template for six communication formats, clear rules for each channel, and a training guide for the non-design teams sending requests."
+excerpt: A shared standard for how teams across eight markets requested content from design
+client: DiDi
+role: Process Design, Content Standards, Training
+year: 2021
+impact:
+  - 8 markets
+  - 6 formats standardized
+  - Complete briefs
+  - Faster turnaround
+cover: ./didi-content-intake/00-header.jpg
+coverMobile: ./didi-content-intake/00-header-mobile.jpg
+accent: '#1a324e'
+order: 0.5
+---
+
+import CaseImage from '../../components/CaseImage.astro';
+import formats from './didi-content-intake/00-formats.jpg';
+import templates from './didi-content-intake/01-templates.jpg';
+import deviceTests from './didi-content-intake/02-device-tests.jpg';
+import templateToInbox from './didi-content-intake/03-template-to-inbox-v2.jpg';
+import rules from './didi-content-intake/04-rules.jpg';
+import training from './didi-content-intake/05-training.jpg';
+
+## A Broken Handoff
+
+My manager had set up a ticketing system in Airtable for design requests, but the content inside each request had no standard. Marketing teams, who sent most of the requests, shared links to documents in completely different formats, often with more text than the format could hold. Some markets’ requests were so hard to work with that they prompted the template.
+
+Requests often arrived incomplete or disorganized, sometimes still containing the requesters’ internal review comments. We spent time figuring out what they wanted and where each piece of text should go, then going back to clarify copy, links, or terms before we could start. And even once the content was clear, the text often didn’t fit the assets.
+
+## Constraints & Trade-Offs
+
+- **Designed for non-designers:** requesters came from marketing and operations teams across several countries, so the standards had to be easy to follow without design knowledge.
+- **Existing tools over new ones:** templates worked in the document tools teams already used, alongside the existing ticketing system.
+- **Real constraints over ideal layouts:** limits had to reflect how messages actually appeared on users’ devices and inside DiDi’s in-house tools.
+
+## One Shared Template
+
+I created a single content template covering the six formats designers produced: emails and landing pages for both apps, xPanels and pop-ups for drivers, and Ops Cards and Ops Cards Plus for passengers.
+
+<CaseImage src={formats} alt="The six formats on phones: xPanel and pop-up on the driver side, email or landing page for both audiences, and Ops Card and Ops Card Plus on the passenger side" />
+
+Each format had its own section, with the fields it needed, character limits, and necessary information such as links and terms and conditions. Requesters simply filled in the formats they needed, so every request arrived in the same structure.
+
+<CaseImage src={templates} alt="Content template with one section per format: Email, Landing, xPanel, Pop-Up, Ops Card and Ops Card Plus, each listing its fields and character limits" />
+
+### Limits Based on Real Devices
+
+Character limits directly affected how messages were displayed across different platforms. In emails, when text was too long, key information was cut off in notifications and inbox previews. When preview text was too short, Gmail filled the remaining space with footer content or image URLs, making the message less clear and less likely to be opened. In in-app formats, text that didn’t fit ran over the illustrations, making the brand look careless.
+
+<CaseImage src={deviceTests} alt="Test emails on desktop, mobile, iPhone and Android inboxes and Gmail notifications, with the subject, preview text and footer highlighted to show where text was cut off" />
+
+To establish practical character limits, I worked with the Operations team to send test emails and review their appearance across mobile notifications, inbox previews, and desktop. The first version of the template used word counts, but the tests showed that words varied too much in length to predict how text would fit. Based on these results, I switched to character limits and refined them for each format, keeping key information visible and ensuring messages displayed as intended.
+
+<CaseImage src={templateToInbox} alt="A filled-in email template next to the received email on mobile, its notification and inbox previews, with character counts for the subject and preview text" />
+
+### Clear Rules and Handoffs
+
+The standards also set rules that prevented recurring errors:
+
+- **Each channel, one role:** long content went on a landing page, with a short email and a CTA linking to it. xPanels linked only to landing pages, never to emails.
+- **Specific CTAs:** “Conoce más” instead of “Ver más”, “Ingresa al app” instead of “Clic aquí”. Following accessibility guidelines for link text, each CTA described where it led, so it made sense on its own.
+- **Clear responsibilities:** for Ops Cards, design delivered the visual without text, since Operations added the copy directly in their own tool.
+
+<CaseImage src={rules} alt="Rules by format: keep emails short and link to a landing page, specific CTAs, xPanels linked only to landing pages, short links only for terms and conditions in pop-ups, and character limits for Ops Cards" />
+
+## Training for Adoption
+
+Adoption happened in stages. At first, some teams kept sending requests the old way, or sent content without using the template. With my manager, we decided to return requests that didn’t follow the standards. This helped, but months later some teams were still struggling, so I turned the standards into a training guide for non-designers and announced the session a month in advance so every team could attend. For each format, the guide showed the template, how each section appeared in the app, and do’s and don’ts with real examples, along with practical tips such as checking character counts in Google Docs.
+
+<CaseImage src={training} alt="Slides from the training guide: contents, basic sections of a landing page, do’s and don’ts for the template, and how a filled-in template becomes the final in-app piece" />
+
+## Results
+
+The biggest change came from the most challenging market, where requests went from arriving incomplete and disorganized to arriving ready to design. For other teams, it was a smaller but steady improvement: requests arrived complete and within format limits, which reduced back-and-forth and let designers start right away.
+
+The standards complemented the Digital Communication Guidelines System and were adopted across the Dominican Republic, Panama, Costa Rica, Colombia, Ecuador, Peru, Chile, and Argentina, contributing to faster delivery across markets.

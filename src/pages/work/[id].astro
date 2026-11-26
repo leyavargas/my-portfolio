@@ -2,14 +2,14 @@
 import { Image, getImage } from 'astro:assets';
 import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getProjects } from '../../lib/projects';
+import { getProjects, projectSlug } from '../../lib/projects';
 import NextProjects from '../../components/NextProjects.astro';
 import GlowButton from '../../components/GlowButton.astro';
 
 export async function getStaticPaths() {
   const projects = await getProjects();
   return projects.map((project, i) => ({
-    params: { id: project.id },
+    params: { id: projectSlug(project) },
     // Los demás proyectos, empezando por el siguiente y dando la vuelta.
     props: { project, others: [...projects.slice(i + 1), ...projects.slice(0, i)] },
   }));
