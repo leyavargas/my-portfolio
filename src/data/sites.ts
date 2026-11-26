@@ -68,7 +68,7 @@ export const sites: Record<SiteId, SiteConfig> = {
   },
   strategy: {
     // Todavía sin dominio propio: cambiar por la dirección definitiva cuando exista.
-    url: 'https://strategy-portfolio.vercel.app',
+    url: 'https://strategy-portfolio-six.vercel.app',
     role: 'Design Strategist',
     description: 'Design strategist turning complex problems into clear decisions.',
     heroTitle: ['Design strategist turning complex', 'problems into clear decisions.'],
