@@ -11,12 +11,11 @@ team: Jose Valverde, Milena Somogyi
 year: 2026
 cover: ./transita/00-header-v2.jpg
 accent: '#c9dcf7'
-order: 0
+order: 2
 ---
 
 import CaseImage from '../../components/CaseImage.astro';
 import ImageCarousel from '../../components/ImageCarousel.astro';
-import empathyMap from './transita/01-empathy-map-v2.jpg';
 import userMatrix from './transita/02-user-matrix-v2.jpg';
 import persona from './transita/03-persona-v2.jpg';
 import outbound from './transita/04-outbound-journey-v3.jpg';
@@ -24,16 +23,12 @@ import returnJourney from './transita/05-return-journey-v3.jpg';
 import surveyCommute from './transita/06-survey-commute-v2.jpg';
 import surveyPriorities from './transita/07-survey-priorities-v2.jpg';
 import ecosystem from './transita/08-solution-ecosystem-v2.jpg';
-import walkthrough from './transita/09-walkthrough.gif';
 import iterations1 from './transita/10-prototype-iterations-1-v2.jpg';
-import iterations2 from './transita/11-prototype-iterations-2-v2.jpg';
 import finalUi from './transita/12-final-ui-v2.jpg';
 
 ## Research
 
 We conducted open-ended interviews with approximately 15 participants across different age groups, locations, and transportation habits. We explored how people experience transportation and mobility in their daily lives, without starting from a predefined problem.
-
-<CaseImage src={empathyMap} alt="Empathy map with color-coded sticky notes grouping what interviewees think, feel, see, hear, and do about public transportation" />
 
 **Insight:** The most critical users were in-person workers who relied on public transit, had no access to a private vehicle, and commuted to fixed destinations during peak hours.
 
@@ -100,13 +95,9 @@ We focused on the Passenger App, where uncertainty had the greatest impact on th
 
 We conducted an initial usability test with four participants, covering key journeys such as onboarding, route planning, transfers, favorites, schedules, and incident reporting.
 
-<CaseImage src={walkthrough} alt="Animated walkthrough of the Transita wireframe prototype, from onboarding to route results" />
-
 Testing revealed opportunities to improve clarity and navigation, leading us to refine the information architecture, redesign key screens, and optimize incident reporting.
 
 <CaseImage src={iterations1} alt="First and second prototypes of the route detail and route search screens, showing the changes after usability testing" />
-
-<CaseImage src={iterations2} alt="First and second prototypes of the incident report and map home screens, showing the changes after usability testing" />
 
 Even with limited functionality in the initial prototype, users saw strong potential in Transita to reduce uncertainty when using public transportation.
 
