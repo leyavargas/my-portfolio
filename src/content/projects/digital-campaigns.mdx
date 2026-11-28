@@ -1,19 +1,23 @@
 ---
-title: Digital Campaigns
+title: Digital & Motion Campaigns
 sites: ["brand"]
-summary: A selection of digital campaign work for eBay, Dentons, and DiDi, including social media, animated web assets, email, and in-app communications for different audiences and markets.
-excerpt: "Digital campaigns for eBay, Dentons, and DiDi."
-client: eBay, Dentons & DiDi
-role: Graphic Design, Illustration, Motion
-year: 2020–2026
-cover: ./digital-campaigns/00-header-v5.jpg
-accent: '#d5e1f2'
-order: 4
+summary: A selection of digital and motion campaign work for eBay, DiDi, Dentons, and Kölbi, including social media, animated ads and web assets, email, and in-app communications for different audiences and markets.
+excerpt: "Digital and motion campaigns for eBay, DiDi, Dentons, and Kölbi."
+client: eBay, DiDi, Dentons & Kölbi
+role: Graphic Design, Illustration, Motion Design
+year: 2018–2026
+cover: ./digital-campaigns/00-header-video.jpg
+coverMobile: ./digital-campaigns/00-header-video-mobile.jpg
+coverVideo: /videos/digital-campaigns-hero.mp4
+coverVideoMobile: /videos/digital-campaigns-hero-mobile.mp4
+accent: '#000000'
+order: 5
 ---
 
 import CaseImage from '../../components/CaseImage.astro';
 import ImageCarousel from '../../components/ImageCarousel.astro';
 import CaseVideo from '../../components/CaseVideo.astro';
+import MotionVideo from '../../components/MotionVideo.astro';
 import ecuador from './digital-campaigns/01-orange-passenger-ecuador.jpg';
 import chile from './digital-campaigns/02-orange-passenger-chile.jpg';
 import adaptations from './digital-campaigns/03-orange-passenger-adaptations.jpg';
@@ -22,14 +26,29 @@ import ebayBannerPoster from './digital-campaigns/04-ebay-hero-banner-poster-v2.
 import ebayInstagram from './digital-campaigns/05-ebay-instagram.jpg';
 import ebayInstagramFunko from './digital-campaigns/05b-ebay-instagram-2.jpg';
 import dentonsSocial from './digital-campaigns/06-dentons-social.jpg';
+import didiPanama from './motion-graphics/01-didi-panama.mp4';
+import didiPanamaPoster from './motion-graphics/01-didi-panama-poster.jpg';
+import didiEconomy from './motion-graphics/02-didi-economy.mp4';
+import didiEconomyPoster from './motion-graphics/02-didi-economy-poster.jpg';
+import didiSolicitaViaje from './motion-graphics/03-didi-solicita-viaje.mp4';
+import didiSolicitaViajePoster from './motion-graphics/03-didi-solicita-viaje-poster.jpg';
+import kolbi from './motion-graphics/04-kolbi.gif';
 
 ## eBay
 
-Selected digital assets for eBay, created as part of POP Agency’s in-house creative team: an animated Facebook hero banner for New Year 2020 and an Instagram carousel for a Q2 2020 paid social campaign.
+Selected digital assets for eBay, created as part of POP Agency’s in-house creative team.
 
 <p class="note">Art direction: Aaron Porvaznik</p>
 
+### New Year Hero Banner
+
+An animated Facebook hero banner for eBay’s New Year 2020 campaign.
+
 <CaseVideo src={ebayBanner} poster={ebayBannerPoster} label="Animated Facebook hero banner for eBay with the text From weekday hustle to weekend bustle" />
+
+### Paid Social Campaign
+
+Instagram carousels for a Q2 2020 paid social campaign, featuring collectibles such as LEGO sets and Funko POP figures.
 
 <ImageCarousel
   label="eBay Instagram carousels"
@@ -39,7 +58,9 @@ Selected digital assets for eBay, created as part of POP Agency’s in-house cre
   ]}
 />
 
-## DiDi: The Orange Passenger
+## DiDi
+
+### The Orange Passenger
 
 “The Orange Passenger” began as an urgent brief for Ecuador, inviting drivers to win cash prizes by picking up a mysterious passenger dressed in DiDi’s signature orange.
 
@@ -55,8 +76,27 @@ With a two-day turnaround and no photography to work with, I built the key visua
 
 <CaseImage src={adaptations} alt="Campaign adaptations: a Facebook post, an in-app banner, and an in-app pop-up" />
 
+### Paid Ads
+
+A selection of animated ads targeting passengers in Panama and Costa Rica, displayed across Google and Facebook.
+
+<MotionVideo src={didiPanama} poster={didiPanamaPoster} audio bordered label="DiDi ad for Panama: an illustrated car drives past trees and a cloud of dust, announcing up to 50% off the first two rides" />
+
+<div class="image-row image-row--2">
+  <MotionVideo src={didiEconomy} poster={didiEconomyPoster} audio bordered label="DiDi Economy ad for Costa Rica: an illustrated car with a discount pin, announcing more affordable fares" />
+  <MotionVideo src={didiSolicitaViaje} poster={didiSolicitaViajePoster} audio bordered label="DiDi retargeting ad for Costa Rica: an illustrated finger taps the DiDi app and a car appears, with the text request your ride now" />
+</div>
+
 ## Dentons
 
 LinkedIn carousel for Dentons, breaking down a complex legal topic slide by slide.
 
 <CaseImage src={dentonsSocial} alt="Dentons LinkedIn carousel on the White House Executive Order on AI Infrastructure, shown next to a phone" />
+
+## Kölbi
+
+Kölbi is Costa Rica’s leading telecommunications brand. This animation was created as part of its 2018 Mother’s Day advertising campaign.
+
+<p class="note">Art direction: Susana Salas</p>
+
+<img src={kolbi.src} width={kolbi.width} height={kolbi.height} alt="Kölbi ad: a pineapple wearing sunglasses on the sand, promoting a TV and internet bundle" loading="lazy" />

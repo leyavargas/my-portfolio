@@ -453,6 +453,23 @@ const facts = [
       margin-top: calc(var(--block-gap) + 5px);
     }
   }
+  /* Titular seguido de una nota (p. ej. el título original de un libro en Arlekín):
+     la mitad del espacio habitual, para que se lean como una unidad. */
+  .prose :global(h2:has(+ .note)) {
+    margin-bottom: 0.35em;
+  }
+  /* Debajo de esa nota, el mismo espacio que suele haber entre un titular y su texto. */
+  .prose :global(h2 + .note) {
+    margin-bottom: calc(0.7 * clamp(2rem, 4vw, 2.75rem));
+  }
+  @media (max-width: 48rem) {
+    .prose :global(h2:has(+ .note)) {
+      margin-bottom: 0.75rem;
+    }
+    .prose :global(h2 + .note) {
+      margin-bottom: 1.5rem;
+    }
+  }
   /* Fila de tres imágenes (p. ej. bici · grupo · moto). */
   .prose :global(.image-row) {
     display: grid;
